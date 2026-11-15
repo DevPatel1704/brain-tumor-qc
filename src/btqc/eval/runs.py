@@ -145,10 +145,10 @@ def e3_mitigations() -> Path:
         return _not_run("e3_mitigations", "only the baseline has predictions")
     from btqc.eval.stats import holm
 
-    for r, padj in zip(rows, holm([r["wilcoxon"]["p"] for r in rows]), strict=True):
-        r["wilcoxon"]["p_holm"] = padj
+    for row, padj in zip(rows, holm([row["wilcoxon"]["p"] for row in rows]), strict=True):
+        row["wilcoxon"]["p_holm"] = padj
     return _write("e3_mitigations", {"status": "ok", "comparisons": rows,
-                                     "H2": any(r["diff_lo"] > 0 for r in rows)})
+                                     "H2": any(row["diff_lo"] > 0 for row in rows)})
 
 
 def e4_calibration() -> Path:
