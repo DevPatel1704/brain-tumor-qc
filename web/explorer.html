@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>BTQC · Generalization explorer</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar" id="topbar"></header>
+<main class="page">
+  <div class="page-head enter">
+    <div>
+      <span class="eyebrow">Research · site-held-out evaluation</span>
+      <h1>Generalization explorer</h1>
+      <p class="sub">Accuracy at held-out site groups, mitigation comparison, risk-coverage and calibration, from the site-held-out harness.</p>
+    </div>
+  </div>
+  <p class="notrun enter" id="status" style="--i:1">Loading…</p>
+
+  <section class="kpis enter" id="composition" style="--i:2;margin-top:16px" aria-label="Dataset composition"></section>
+
+  <div class="card enter" id="synthWrap" hidden style="--i:3;margin-top:4px;padding:14px 16px">
+    <label class="check" style="justify-content:space-between;gap:16px">
+      <span><span class="badge synth" style="margin-right:8px">Synthetic</span>Show the synthetic pipeline demo instead <span class="help" style="display:block;margin-top:2px">Toy model on synthetic ellipsoids. It exercises the harness end to end; it is not a result.</span></span>
+      <input type="checkbox" class="switch" id="synth">
+    </label>
+  </div>
+  <div class="synthnote" id="synthNote" hidden style="margin-top:12px"></div>
+
+  <div class="toolbar" id="filters" style="margin-top:18px" hidden>
+    <label class="check sm">Method <select id="fMethod"></select></label>
+    <div class="seg" role="radiogroup" aria-label="Region" id="fRegionSeg">
+      <button type="button" role="radio" data-value="WT" aria-checked="true">Whole tumor</button>
+      <button type="button" role="radio" data-value="TC" aria-checked="false">Tumor core</button>
+      <button type="button" role="radio" data-value="ET" aria-checked="false">Enhancing</button>
+    </div>
+    <select id="fRegion" hidden><option>WT</option><option>TC</option><option>ET</option></select>
+    <div class="seg" role="radiogroup" aria-label="Metric" id="fMetricSeg">
+      <button type="button" role="radio" data-value="dice" aria-checked="true">Dice</button>
+      <button type="button" role="radio" data-value="hd95" aria-checked="false">HD95 (mm)</button>
+    </div>
+    <select id="fMetric" hidden><option value="dice">Dice</option><option value="hd95">HD95 (mm)</option></select>
+  </div>
+  <section class="kpis" id="sumKpis" hidden></section>
+  <div class="grid2">
+    <section class="card chartcard" id="cHeld"></section>
+    <section class="card chartcard" id="cGap"></section>
+    <section class="card chartcard" id="cMethods"></section>
+    <section class="card chartcard" id="cRC"></section>
+    <section class="card chartcard" id="cRel"></section>
+    <section class="card chartcard" id="cFail"></section>
+  </div>
+</main>
+<script type="module" src="src/explorer.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Risk-coverage (SYNTHETIC - NOT A RESULT)}
+\label{tab:rc}
+\begin{tabular}{llrrrrrr}
+\hline
+method & fold & aurc & oracle\_aurc & auc\_dice & dice\_full & dice\_at\_80 & gain\_at\_80 \\
+\hline
+stub\_baseline & inst\_1 & 0.091 & 0.084 & 0.909 & 0.851 & 0.889 & 0.038 \\
+stub\_baseline & inst\_18 & 0.146 & 0.106 & 0.854 & 0.817 & 0.859 & 0.042 \\
+stub\_baseline & lgg\_only & 0.130 & 0.127 & 0.870 & 0.752 & 0.843 & 0.091 \\
+stub\_baseline & small & 0.482 & 0.422 & 0.518 & 0.447 & 0.443 & -0.004 \\
+stub\_mitigated & inst\_1 & 0.068 & 0.065 & 0.932 & 0.903 & 0.923 & 0.020 \\
+stub\_mitigated & inst\_18 & 0.118 & 0.081 & 0.882 & 0.865 & 0.884 & 0.019 \\
+stub\_mitigated & lgg\_only & 0.113 & 0.087 & 0.887 & 0.818 & 0.842 & 0.024 \\
+stub\_mitigated & small & 0.254 & 0.243 & 0.746 & 0.603 & 0.641 & 0.038 \\
+\hline
+\end{tabular}
+\end{table}

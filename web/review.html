@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>BTQC · Review queue</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar" id="topbar"></header>
+<main class="page" style="max-width:1320px">
+  <div class="page-head enter">
+    <div>
+      <span class="eyebrow">Workflow · advisory review gate</span>
+      <h1>Review queue</h1>
+      <p class="sub">Cases ordered by boundary uncertainty, most uncertain first. The flag depends only on the score and the review limit: <span class="mono">flag = score &gt; limit</span>; a missing score is flagged.</p>
+    </div>
+  </div>
+  <section class="kpis enter" id="kpis" style="--i:1" aria-label="Queue summary"></section>
+  <div class="toolbar enter" style="--i:2">
+    <div class="search"><span id="qIcon"></span><input type="search" id="q" placeholder="Search case id or site group" aria-label="Search cases"></div>
+    <div class="seg" role="radiogroup" aria-label="Filter" id="filter">
+      <button type="button" role="radio" data-value="all" aria-checked="true">All</button>
+      <button type="button" role="radio" data-value="above" aria-checked="false">Above limit</button>
+      <button type="button" role="radio" data-value="below" aria-checked="false">At or below</button>
+      <button type="button" role="radio" data-value="awaiting" aria-checked="false">Awaiting</button>
+      <button type="button" role="radio" data-value="reviewed" aria-checked="false">Reviewed</button>
+    </div>
+    <select id="sort" aria-label="Sort">
+      <option value="score-desc">Most uncertain first</option>
+      <option value="score-asc">Least uncertain first</option>
+      <option value="id">Case id</option>
+      <option value="wt-desc">Largest whole tumor first</option>
+    </select>
+    <div class="limitbox">
+      <label for="lim">Review limit</label><input id="lim" class="warm" type="range" min="0" max="100" value="25"><output id="limO">0.25</output>
+      <button class="btn sm ghost" type="button" id="limReset" title="Back to the configured default">Default</button>
+    </div>
+  </div>
+  <p class="example" id="exNote" hidden></p>
+  <p class="help">Notes are stored locally in SQLite. Do not type patient identifiers into notes. Moving the review limit here changes this view only; the configured default comes from configs/uncertainty.yaml.</p>
+  <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  <div class="table-wrap">
+    <table class="data queue" id="queue">
+      <thead><tr><th>Case</th><th class="num">Priority</th><th>Boundary uncertainty vs limit</th><th>Flag</th><th>Source</th><th class="num">WT mL</th><th>Decision</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p class="help" id="countLine"></p>
+  <h2 style="margin-top:30px">Decision log</h2>
+  <p class="help" style="margin:4px 0 10px">Every decision is appended; nothing is overwritten.</p>
+  <div class="table-wrap"><table class="data" id="log"><thead><tr><th class="num">#</th><th>Time (UTC)</th><th>Case</th><th>Decision</th><th>Reviewer</th><th class="num">Score</th><th class="num">Limit</th><th>Note</th></tr></thead><tbody></tbody></table></div>
+</main>
+<script type="module" src="src/review.js"></script>
+</body>
+</html>

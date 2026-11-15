@@ -1,0 +1,53 @@
+# nnU-Net training setup for the site-held-out protocol.
+dataset:
+  id: 501
+  name: FeTS2022
+  fixture_id: 990          # synthetic fixture dataset for the smoke test (gate G3)
+  fixture_name: BtqcFixture
+
+configuration: 3d_fullres  # Tier 1 fallback: 2d or 3d_lowres (record the change in docs/deviations.md)
+# Tier 0 laptop run (GTX 1650 Ti, 4 GB): nnU-Net planned for a 4 GB memory target under
+# its own plans name, so the default nnUNetPlans stay untouched (docs/deviations.md D-train-4gb).
+# nnUNetPlans_3GB = nnUNetPlans_4GB with patch [80,112,80] (was [96,128,96]); same preprocessed
+# data. The 4 GB plan ran out of GPU memory on the GTX 1650 Ti (only ~3 GB usable under Windows).
+plans: nnUNetPlans_3GB
+gpu_memory_target: 4       # GB, passed to nnUNetv2_plan_and_preprocess -gpu_memory_target
+cudnn_benchmark: false     # cudnn algorithm search spikes GPU memory past 4 GB (env BTQC_CUDNN_BENCHMARK)
+preprocess_workers: 2      # -np for preprocessing; 7.4 GB RAM (4 workers ran out of memory)
+
+# Same budget for every method: BTQC_EPOCHS epochs x 250 iterations, fixed seeds.
+# nnU-Net ships 250/100/50-epoch variants; we use 100 epochs via the btqc
+# trainer (env BTQC_EPOCHS) so every method gets exactly the same schedule.
+# Laptop run under a 24 h deadline (2026-11-13): 10 epochs, baseline only, fold "mid".
+# Full protocol: 100. Record in docs/deviations.md.
+epochs: 10
+seed: 12345                # trainer seed = seed + fold index
+n_members: 1               # seed replicates per fold (deep ensemble); full protocol: 3. Tier 0 laptop run: 1
+
+methods:
+  baseline: {trainer: nnUNetTrainer_btqc, dataset_suffix: ""}
+  strong_aug: {trainer: nnUNetTrainer_btqcStrongAug, dataset_suffix: ""}
+  style_aug: {trainer: nnUNetTrainer_btqcStyle, dataset_suffix: ""}       # MaxStyle fallback
+  standardize_pct: {trainer: nnUNetTrainer_btqc, dataset_suffix: "_pct"}  # per-case percentile standardization
+  # test-time adaptation reuses the baseline models; it is an inference-time method (infer.yaml / scripts/infer.py)
+  tta_entropy: {trainer: nnUNetTrainer_btqc, dataset_suffix: "", inference: entropy_tta}
+
+smoke:
+  n_cases: 8
+  trainer: nnUNetTrainer_btqcSmoke
+  configuration: 3d_fullres
+  epochs: 3
+  iterations: 8
+  device: cpu
+
+# Rough per-epoch time used for the pre-run estimate (seconds per epoch of
+# 250 iterations). Replace with measured values after the first epoch.
+seconds_per_epoch:
+  cpu: 3600
+  gpu_4gb: 420
+  gpu_8gb: 240
+  gpu_24gb: 120
+
+mlflow:
+  tracking_uri: sqlite:///mlflow.db   # local, git-ignored; artifacts in mlruns/
+  experiment: btqc-site-heldout

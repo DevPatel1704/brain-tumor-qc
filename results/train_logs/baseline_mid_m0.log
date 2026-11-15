@@ -1,0 +1,326 @@
+D:\Foundation Project\brain-tumor-qc\.venv\Lib\site-packages\torch\jit\_script.py:1643: FutureWarning: `torch.jit.interface` is deprecated. Please use `torch.compile` instead.
+  warnings.warn(
+Trainer 'nnUNetTrainer_btqc' not found in nnunetv2.training.nnUNetTrainer.
+Searching in external trainer paths from environment variable 'nnUNet_extTrainer'...
+Searching in: D:\Foundation Project\brain-tumor-qc\src\btqc\train\trainers
+Searching for class nnUNetTrainer_btqc in folder D:\Foundation Project\brain-tumor-qc\src\btqc\train\trainers with current module None
+  Inspecting module: nnUNetTrainer_btqc
+Found class nnUNetTrainer_btqc in nnUNetTrainer_btqc
+Using trainer 'nnUNetTrainer_btqc' from: D:\Foundation Project\brain-tumor-qc\src\btqc\train\trainers
+Using device: cuda:0
+
+#######################################################################
+Please cite the following paper when using nnU-Net:
+Isensee, F., Jaeger, P. F., Kohl, S. A., Petersen, J., & Maier-Hein, K. H. (2021). nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation. Nature methods, 18(2), 203-211.
+#######################################################################
+
+2026-11-13 10:06:45.836738: do_dummy_2d_data_aug: False
+2026-11-13 10:06:45.929977: Using splits from existing split file: D:\Foundation Project\brain-tumor-qc\data\nnUNet_preprocessed\Dataset501_FeTS2022\splits_final.json
+2026-11-13 10:06:45.955027: The split file contains 5 splits.
+2026-11-13 10:06:45.973123: Desired fold for training: 3
+2026-11-13 10:06:45.981189: This split has 828 training and 104 validation cases.
+
+This is the configuration used by this training:
+Configuration name: 3d_fullres
+ {'data_identifier': 'nnUNetPlans_4GB_3d_fullres', 'preprocessor_name': 'DefaultPreprocessor', 'batch_size': 2, 'patch_size': [80, 112, 80], 'median_image_size_in_voxels': [140.0, 171.0, 137.0], 'spacing': [1.0, 1.0, 1.0], 'normalization_schemes': ['ZScoreNormalization', 'ZScoreNormalization', 'ZScoreNormalization', 'ZScoreNormalization'], 'use_mask_for_norm': [True, True, True, True], 'resampling_fn_data': 'resample_data_or_seg_to_shape', 'resampling_fn_seg': 'resample_data_or_seg_to_shape', 'resampling_fn_data_kwargs': {'is_seg': False, 'order': 3, 'order_z': 0, 'force_separate_z': None}, 'resampling_fn_seg_kwargs': {'is_seg': True, 'order': 1, 'order_z': 0, 'force_separate_z': None}, 'resampling_fn_probabilities': 'resample_data_or_seg_to_shape', 'resampling_fn_probabilities_kwargs': {'is_seg': False, 'order': 1, 'order_z': 0, 'force_separate_z': None}, 'architecture': {'network_class_name': 'dynamic_network_architectures.architectures.unet.PlainConvUNet', 'arch_kwargs': {'n_stages': 5, 'features_per_stage': [32, 64, 128, 256, 320], 'conv_op': 'torch.nn.modules.conv.Conv3d', 'kernel_sizes': [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]], 'strides': [[1, 1, 1], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'n_conv_per_stage': [2, 2, 2, 2, 2], 'n_conv_per_stage_decoder': [2, 2, 2, 2], 'conv_bias': True, 'norm_op': 'torch.nn.modules.instancenorm.InstanceNorm3d', 'norm_op_kwargs': {'eps': 1e-05, 'affine': True}, 'dropout_op': None, 'dropout_op_kwargs': None, 'nonlin': 'torch.nn.LeakyReLU', 'nonlin_kwargs': {'inplace': True}}, '_kw_requires_import': ['conv_op', 'norm_op', 'dropout_op', 'nonlin']}, 'batch_dice': False} 
+
+These are the global plan.json settings:
+ {'dataset_name': 'Dataset501_FeTS2022', 'plans_name': 'nnUNetPlans_3GB', 'original_median_spacing_after_transp': [1.0, 1.0, 1.0], 'original_median_shape_after_transp': [140, 171, 137], 'image_reader_writer': 'SimpleITKIO', 'transpose_forward': [0, 1, 2], 'transpose_backward': [0, 1, 2], 'experiment_planner_used': 'ExperimentPlanner', 'label_manager': 'LabelManager', 'foreground_intensity_properties_per_channel': {'0': {'max': 100487.5078125, 'mean': 871.99560546875, 'median': 407.0, 'min': 0.10992202162742615, 'percentile_00_5': 55.0, 'percentile_99_5': 5826.0, 'std': 2023.5792236328125}, '1': {'max': 1905559.25, 'mean': 1695.4266357421875, 'median': 552.0, 'min': 0.0, 'percentile_00_5': 47.0, 'percentile_99_5': 8324.0, 'std': 18675.71484375}, '2': {'max': 4193654.75, 'mean': 2144.39794921875, 'median': 739.0, 'min': 0.0, 'percentile_00_5': 110.0, 'percentile_99_5': 10379.0, 'std': 45258.86328125}, '3': {'max': 580014.3125, 'mean': 995.2206420898438, 'median': 512.3311157226562, 'min': 0.0, 'percentile_00_5': 108.0, 'percentile_99_5': 11910.0, 'std': 4623.41552734375}}} 
+
+2026-11-13 10:06:50.478418: Unable to plot network architecture:
+2026-11-13 10:06:50.486692: No module named 'hiddenlayer'
+2026-11-13 10:06:50.666923: cudnn.benchmark disabled (BTQC_CUDNN_BENCHMARK=0)
+2026-11-13 10:06:50.674929: 
+2026-11-13 10:06:50.683219: Epoch 0
+2026-11-13 10:06:50.691116: Current learning rate: 0.01
+2026-11-13 10:25:51.453492: train_loss -0.3277
+2026-11-13 10:25:51.479131: val_loss -0.5198
+2026-11-13 10:25:51.487649: Pseudo dice [np.float32(0.8077), np.float32(0.6784), np.float32(0.7731)]
+2026-11-13 10:25:51.496651: Epoch time: 1140.77 s
+2026-11-13 10:25:51.504649: Yayy! New best EMA pseudo Dice: 0.7530999779701233
+2026-11-13 10:25:54.501854: 
+2026-11-13 10:25:54.509855: Epoch 1
+2026-11-13 10:25:54.517642: Current learning rate: 0.0091
+2026-11-13 10:44:36.034402: train_loss -0.5595
+2026-11-13 10:44:36.195240: val_loss -0.5408
+2026-11-13 10:44:36.203263: Pseudo dice [np.float32(0.8226), np.float32(0.6513), np.float32(0.73)]
+2026-11-13 10:44:36.213236: Epoch time: 1121.53 s
+2026-11-13 10:44:37.372086: 
+2026-11-13 10:44:37.398622: Epoch 2
+2026-11-13 10:44:37.405641: Current learning rate: 0.00818
+2026-11-13 11:03:15.132748: train_loss -0.5736
+2026-11-13 11:03:15.195214: val_loss -0.6271
+2026-11-13 11:03:15.204279: Pseudo dice [np.float32(0.8781), np.float32(0.7683), np.float32(0.7922)]
+2026-11-13 11:03:15.214299: Epoch time: 1117.76 s
+2026-11-13 11:03:15.222841: Yayy! New best EMA pseudo Dice: 0.7573999762535095
+2026-11-13 11:03:17.097757: 
+2026-11-13 11:03:17.106768: Epoch 3
+2026-11-13 11:03:17.114767: Current learning rate: 0.00725
+2026-11-13 11:21:50.144205: train_loss -0.6031
+2026-11-13 11:21:50.204463: val_loss -0.5949
+2026-11-13 11:21:50.213983: Pseudo dice [np.float32(0.8404), np.float32(0.7142), np.float32(0.7565)]
+2026-11-13 11:21:50.221539: Epoch time: 1113.05 s
+2026-11-13 11:21:50.230539: Yayy! New best EMA pseudo Dice: 0.7587000131607056
+2026-11-13 11:21:51.476125: 
+2026-11-13 11:21:51.483640: Epoch 4
+2026-11-13 11:21:51.493646: Current learning rate: 0.00631
+2026-11-13 11:40:46.146395: train_loss -0.6257
+2026-11-13 11:40:46.255514: val_loss -0.5972
+2026-11-13 11:40:46.265513: Pseudo dice [np.float32(0.8613), np.float32(0.7683), np.float32(0.7982)]
+2026-11-13 11:40:46.273904: Epoch time: 1134.67 s
+2026-11-13 11:40:46.773152: Yayy! New best EMA pseudo Dice: 0.763700008392334
+2026-11-13 11:40:49.341247: 
+2026-11-13 11:40:49.351270: Epoch 5
+2026-11-13 11:40:49.360246: Current learning rate: 0.00536
+2026-11-13 11:59:28.103637: train_loss -0.6244
+2026-11-13 11:59:28.181649: val_loss -0.6294
+2026-11-13 11:59:28.190664: Pseudo dice [np.float32(0.8965), np.float32(0.7997), np.float32(0.7882)]
+2026-11-13 11:59:28.200702: Epoch time: 1118.75 s
+2026-11-13 11:59:28.207701: Yayy! New best EMA pseudo Dice: 0.7702000141143799
+2026-11-13 11:59:30.685924: 
+2026-11-13 11:59:30.695960: Epoch 6
+2026-11-13 11:59:30.703645: Current learning rate: 0.00438
+2026-11-13 12:18:17.531702: train_loss -0.6628
+2026-11-13 12:18:17.620157: val_loss -0.6804
+2026-11-13 12:18:17.629177: Pseudo dice [np.float32(0.8815), np.float32(0.8176), np.float32(0.8241)]
+2026-11-13 12:18:17.638158: Epoch time: 1126.85 s
+2026-11-13 12:18:17.646153: Yayy! New best EMA pseudo Dice: 0.7773000001907349
+2026-11-13 12:18:18.800992: 
+2026-11-13 12:18:18.828334: Epoch 7
+2026-11-13 12:18:18.838847: Current learning rate: 0.00338
+2026-11-13 12:37:36.270926: train_loss -0.699
+2026-11-13 12:37:36.336511: val_loss -0.7224
+2026-11-13 12:37:36.346490: Pseudo dice [np.float32(0.9148), np.float32(0.8911), np.float32(0.8357)]
+2026-11-13 12:37:36.354511: Epoch time: 1157.47 s
+2026-11-13 12:37:36.363511: Yayy! New best EMA pseudo Dice: 0.7875999808311462
+2026-11-13 12:37:38.308275: 
+2026-11-13 12:37:38.329480: Epoch 8
+2026-11-13 12:37:38.337481: Current learning rate: 0.00235
+2026-11-13 12:56:13.350640: train_loss -0.6817
+2026-11-13 12:56:13.400565: val_loss -0.6338
+2026-11-13 12:56:13.409593: Pseudo dice [np.float32(0.8939), np.float32(0.8266), np.float32(0.8322)]
+2026-11-13 12:56:13.419197: Epoch time: 1115.04 s
+2026-11-13 12:56:13.427138: Yayy! New best EMA pseudo Dice: 0.7939000129699707
+2026-11-13 12:56:14.537301: 
+2026-11-13 12:56:14.562437: Epoch 9
+2026-11-13 12:56:14.660794: Current learning rate: 0.00126
+2026-11-13 13:14:58.742894: train_loss -0.7052
+2026-11-13 13:14:58.791563: val_loss -0.7118
+2026-11-13 13:14:58.819504: Pseudo dice [np.float32(0.9098), np.float32(0.8668), np.float32(0.8566)]
+2026-11-13 13:14:58.828189: Epoch time: 1124.21 s
+2026-11-13 13:14:58.837979: Yayy! New best EMA pseudo Dice: 0.802299976348877
+2026-11-13 13:15:01.295194: Training done.
+2026-11-13 13:15:08.150798: Using splits from existing split file: D:\Foundation Project\brain-tumor-qc\data\nnUNet_preprocessed\Dataset501_FeTS2022\splits_final.json
+2026-11-13 13:15:08.183455: The split file contains 5 splits.
+2026-11-13 13:15:08.191457: Desired fold for training: 3
+2026-11-13 13:15:08.200969: This split has 828 training and 104 validation cases.
+2026-11-13 13:15:08.210972: predicting FeTS2022_00000
+2026-11-13 13:15:08.821994: FeTS2022_00000, shape torch.Size([4, 146, 171, 136]), rank 0
+2026-11-13 13:17:06.869559: predicting FeTS2022_00009
+2026-11-13 13:17:07.447170: FeTS2022_00009, shape torch.Size([4, 132, 167, 135]), rank 0
+2026-11-13 13:18:17.021295: predicting FeTS2022_00012
+2026-11-13 13:18:17.636045: FeTS2022_00012, shape torch.Size([4, 141, 178, 143]), rank 0
+2026-11-13 13:20:01.997995: predicting FeTS2022_00117
+2026-11-13 13:20:02.746348: FeTS2022_00117, shape torch.Size([4, 138, 159, 142]), rank 0
+2026-11-13 13:21:12.346278: predicting FeTS2022_00118
+2026-11-13 13:21:13.083471: FeTS2022_00118, shape torch.Size([4, 141, 169, 137]), rank 0
+2026-11-13 13:22:57.494772: predicting FeTS2022_00140
+2026-11-13 13:22:58.254702: FeTS2022_00140, shape torch.Size([4, 139, 171, 134]), rank 0
+2026-11-13 13:24:42.646509: predicting FeTS2022_00148
+2026-11-13 13:24:43.280139: FeTS2022_00148, shape torch.Size([4, 136, 173, 141]), rank 0
+2026-11-13 13:26:27.680445: predicting FeTS2022_00152
+2026-11-13 13:26:28.458210: FeTS2022_00152, shape torch.Size([4, 137, 167, 133]), rank 0
+2026-11-13 13:27:38.203965: predicting FeTS2022_00154
+2026-11-13 13:27:39.150881: FeTS2022_00154, shape torch.Size([4, 141, 165, 143]), rank 0
+2026-11-13 13:28:49.827530: predicting FeTS2022_00183
+2026-11-13 13:28:50.429797: FeTS2022_00183, shape torch.Size([4, 138, 165, 129]), rank 0
+2026-11-13 13:30:00.377481: predicting FeTS2022_00187
+2026-11-13 13:30:01.282847: FeTS2022_00187, shape torch.Size([4, 143, 167, 138]), rank 0
+2026-11-13 13:31:11.551322: predicting FeTS2022_00192
+2026-11-13 13:31:12.289538: FeTS2022_00192, shape torch.Size([4, 140, 177, 136]), rank 0
+2026-11-13 13:32:56.952696: predicting FeTS2022_00206
+2026-11-13 13:32:57.513206: FeTS2022_00206, shape torch.Size([4, 140, 177, 137]), rank 0
+2026-11-13 13:34:41.941763: predicting FeTS2022_00246
+2026-11-13 13:34:42.938474: FeTS2022_00246, shape torch.Size([4, 138, 179, 133]), rank 0
+2026-11-13 13:36:27.667622: predicting FeTS2022_00249
+2026-11-13 13:36:30.001597: FeTS2022_00249, shape torch.Size([4, 141, 175, 135]), rank 0
+2026-11-13 13:38:15.906690: predicting FeTS2022_00262
+2026-11-13 13:38:16.386148: FeTS2022_00262, shape torch.Size([4, 142, 175, 135]), rank 0
+2026-11-13 13:40:00.848485: predicting FeTS2022_00293
+2026-11-13 13:40:01.385202: FeTS2022_00293, shape torch.Size([4, 141, 176, 138]), rank 0
+2026-11-13 13:41:45.820736: predicting FeTS2022_00316
+2026-11-13 13:41:46.307679: FeTS2022_00316, shape torch.Size([4, 141, 185, 135]), rank 0
+2026-11-13 13:43:30.739030: predicting FeTS2022_00332
+2026-11-13 13:43:31.147952: FeTS2022_00332, shape torch.Size([4, 127, 160, 124]), rank 0
+2026-11-13 13:44:40.784550: predicting FeTS2022_00338
+2026-11-13 13:44:41.123436: FeTS2022_00338, shape torch.Size([4, 141, 182, 138]), rank 0
+2026-11-13 13:46:25.553339: predicting FeTS2022_00340
+2026-11-13 13:46:26.135891: FeTS2022_00340, shape torch.Size([4, 139, 171, 148]), rank 0
+2026-11-13 13:48:10.632616: predicting FeTS2022_00344
+2026-11-13 13:48:11.020924: FeTS2022_00344, shape torch.Size([4, 138, 167, 132]), rank 0
+2026-11-13 13:49:20.654433: predicting FeTS2022_00383
+2026-11-13 13:49:20.998914: FeTS2022_00383, shape torch.Size([4, 140, 160, 145]), rank 0
+2026-11-13 13:50:30.617064: predicting FeTS2022_00387
+2026-11-13 13:50:30.979005: FeTS2022_00387, shape torch.Size([4, 127, 171, 128]), rank 0
+2026-11-13 13:52:15.398766: predicting FeTS2022_00406
+2026-11-13 13:52:15.803476: FeTS2022_00406, shape torch.Size([4, 140, 179, 136]), rank 0
+2026-11-13 13:54:00.236449: predicting FeTS2022_00414
+2026-11-13 13:54:00.655057: FeTS2022_00414, shape torch.Size([4, 143, 184, 132]), rank 0
+2026-11-13 13:55:45.090042: predicting FeTS2022_00423
+2026-11-13 13:55:45.484616: FeTS2022_00423, shape torch.Size([4, 142, 168, 138]), rank 0
+2026-11-13 13:56:55.125721: predicting FeTS2022_00425
+2026-11-13 13:56:55.479203: FeTS2022_00425, shape torch.Size([4, 138, 183, 150]), rank 0
+2026-11-13 13:58:39.925772: predicting FeTS2022_00506
+2026-11-13 13:58:41.058527: FeTS2022_00506, shape torch.Size([4, 145, 182, 142]), rank 0
+2026-11-13 14:00:25.551643: predicting FeTS2022_00525
+2026-11-13 14:00:26.330620: FeTS2022_00525, shape torch.Size([4, 148, 175, 143]), rank 0
+2026-11-13 14:02:10.772702: predicting FeTS2022_00542
+2026-11-13 14:02:11.325374: FeTS2022_00542, shape torch.Size([4, 144, 161, 141]), rank 0
+2026-11-13 14:03:20.957486: predicting FeTS2022_00545
+2026-11-13 14:03:21.392827: FeTS2022_00545, shape torch.Size([4, 132, 168, 138]), rank 0
+2026-11-13 14:04:31.014923: predicting FeTS2022_00555
+2026-11-13 14:04:31.471786: FeTS2022_00555, shape torch.Size([4, 141, 156, 139]), rank 0
+2026-11-13 14:05:41.088690: predicting FeTS2022_00604
+2026-11-13 14:05:41.472256: FeTS2022_00604, shape torch.Size([4, 146, 178, 136]), rank 0
+2026-11-13 14:07:25.949553: predicting FeTS2022_00613
+2026-11-13 14:07:26.299205: FeTS2022_00613, shape torch.Size([4, 138, 169, 131]), rank 0
+2026-11-13 14:09:10.748502: predicting FeTS2022_00618
+2026-11-13 14:09:11.275753: FeTS2022_00618, shape torch.Size([4, 145, 172, 140]), rank 0
+2026-11-13 14:10:55.743933: predicting FeTS2022_00619
+2026-11-13 14:10:56.297704: FeTS2022_00619, shape torch.Size([4, 140, 166, 135]), rank 0
+2026-11-13 14:12:05.973452: predicting FeTS2022_00622
+2026-11-13 14:12:06.337851: FeTS2022_00622, shape torch.Size([4, 137, 167, 129]), rank 0
+2026-11-13 14:13:16.005847: predicting FeTS2022_00642
+2026-11-13 14:13:16.512912: FeTS2022_00642, shape torch.Size([4, 138, 170, 137]), rank 0
+2026-11-13 14:15:00.954320: predicting FeTS2022_00649
+2026-11-13 14:15:01.333911: FeTS2022_00649, shape torch.Size([4, 138, 180, 135]), rank 0
+2026-11-13 14:16:45.771476: predicting FeTS2022_00657
+2026-11-13 14:16:46.607463: FeTS2022_00657, shape torch.Size([4, 146, 172, 139]), rank 0
+2026-11-13 14:18:31.042559: predicting FeTS2022_00680
+2026-11-13 14:18:31.452123: FeTS2022_00680, shape torch.Size([4, 145, 184, 147]), rank 0
+2026-11-13 14:20:15.875656: predicting FeTS2022_00685
+2026-11-13 14:20:16.372647: FeTS2022_00685, shape torch.Size([4, 141, 182, 135]), rank 0
+2026-11-13 14:22:00.808553: predicting FeTS2022_00705
+2026-11-13 14:22:01.235948: FeTS2022_00705, shape torch.Size([4, 145, 187, 150]), rank 0
+2026-11-13 14:23:45.678400: predicting FeTS2022_00716
+2026-11-13 14:23:46.126878: FeTS2022_00716, shape torch.Size([4, 145, 167, 138]), rank 0
+2026-11-13 14:24:55.753755: predicting FeTS2022_00718
+2026-11-13 14:24:56.165118: FeTS2022_00718, shape torch.Size([4, 147, 180, 146]), rank 0
+2026-11-13 14:26:40.604707: predicting FeTS2022_00733
+2026-11-13 14:26:41.042813: FeTS2022_00733, shape torch.Size([4, 136, 167, 149]), rank 0
+2026-11-13 14:27:50.691980: predicting FeTS2022_00759
+2026-11-13 14:27:51.231703: FeTS2022_00759, shape torch.Size([4, 143, 166, 143]), rank 0
+2026-11-13 14:29:00.870693: predicting FeTS2022_00837
+2026-11-13 14:29:01.283822: FeTS2022_00837, shape torch.Size([4, 140, 166, 132]), rank 0
+2026-11-13 14:30:10.909490: predicting FeTS2022_01010
+2026-11-13 14:30:11.508410: FeTS2022_01010, shape torch.Size([4, 139, 154, 148]), rank 0
+2026-11-13 14:31:21.136053: predicting FeTS2022_01034
+2026-11-13 14:31:21.602408: FeTS2022_01034, shape torch.Size([4, 140, 173, 127]), rank 0
+2026-11-13 14:33:06.036699: predicting FeTS2022_01036
+2026-11-13 14:33:06.318090: FeTS2022_01036, shape torch.Size([4, 139, 158, 137]), rank 0
+2026-11-13 14:34:15.966437: predicting FeTS2022_01047
+2026-11-13 14:34:16.553383: FeTS2022_01047, shape torch.Size([4, 144, 172, 138]), rank 0
+2026-11-13 14:36:00.987532: predicting FeTS2022_01059
+2026-11-13 14:36:01.479333: FeTS2022_01059, shape torch.Size([4, 139, 176, 138]), rank 0
+2026-11-13 14:37:46.621813: predicting FeTS2022_01077
+2026-11-13 14:37:47.251926: FeTS2022_01077, shape torch.Size([4, 139, 179, 130]), rank 0
+2026-11-13 14:39:32.522800: predicting FeTS2022_01085
+2026-11-13 14:39:32.980757: FeTS2022_01085, shape torch.Size([4, 139, 171, 131]), rank 0
+2026-11-13 14:41:18.241926: predicting FeTS2022_01092
+2026-11-13 14:41:18.776649: FeTS2022_01092, shape torch.Size([4, 139, 161, 129]), rank 0
+2026-11-13 14:42:28.926963: predicting FeTS2022_01110
+2026-11-13 14:42:29.279848: FeTS2022_01110, shape torch.Size([4, 136, 159, 139]), rank 0
+2026-11-13 14:43:39.432915: predicting FeTS2022_01120
+2026-11-13 14:43:39.793247: FeTS2022_01120, shape torch.Size([4, 138, 163, 132]), rank 0
+2026-11-13 14:44:49.941328: predicting FeTS2022_01124
+2026-11-13 14:44:50.408437: FeTS2022_01124, shape torch.Size([4, 138, 184, 134]), rank 0
+2026-11-13 14:46:35.672758: predicting FeTS2022_01133
+2026-11-13 14:46:36.439487: FeTS2022_01133, shape torch.Size([4, 138, 174, 142]), rank 0
+2026-11-13 14:48:21.647682: predicting FeTS2022_01158
+2026-11-13 14:48:22.057587: FeTS2022_01158, shape torch.Size([4, 141, 174, 134]), rank 0
+2026-11-13 14:50:07.329250: predicting FeTS2022_01162
+2026-11-13 14:50:07.709305: FeTS2022_01162, shape torch.Size([4, 144, 170, 136]), rank 0
+2026-11-13 14:51:52.943457: predicting FeTS2022_01206
+2026-11-13 14:51:53.460101: FeTS2022_01206, shape torch.Size([4, 141, 177, 133]), rank 0
+2026-11-13 14:53:38.683483: predicting FeTS2022_01207
+2026-11-13 14:53:39.080127: FeTS2022_01207, shape torch.Size([4, 138, 170, 139]), rank 0
+2026-11-13 14:55:24.319501: predicting FeTS2022_01208
+2026-11-13 14:55:24.617728: FeTS2022_01208, shape torch.Size([4, 138, 179, 140]), rank 0
+2026-11-13 14:57:09.855673: predicting FeTS2022_01225
+2026-11-13 14:57:10.280282: FeTS2022_01225, shape torch.Size([4, 134, 169, 140]), rank 0
+2026-11-13 14:58:55.479189: predicting FeTS2022_01256
+2026-11-13 14:58:55.876027: FeTS2022_01256, shape torch.Size([4, 139, 158, 139]), rank 0
+2026-11-13 15:00:06.000513: predicting FeTS2022_01261
+2026-11-13 15:00:06.415051: FeTS2022_01261, shape torch.Size([4, 141, 178, 135]), rank 0
+2026-11-13 15:01:51.671582: predicting FeTS2022_01264
+2026-11-13 15:01:52.116666: FeTS2022_01264, shape torch.Size([4, 140, 169, 142]), rank 0
+2026-11-13 15:03:37.382508: predicting FeTS2022_01273
+2026-11-13 15:03:37.753061: FeTS2022_01273, shape torch.Size([4, 138, 167, 135]), rank 0
+2026-11-13 15:04:47.886786: predicting FeTS2022_01279
+2026-11-13 15:04:48.381101: FeTS2022_01279, shape torch.Size([4, 138, 155, 139]), rank 0
+2026-11-13 15:05:58.514041: predicting FeTS2022_01335
+2026-11-13 15:05:59.022394: FeTS2022_01335, shape torch.Size([4, 143, 166, 142]), rank 0
+2026-11-13 15:07:09.203087: predicting FeTS2022_01355
+2026-11-13 15:07:09.517192: FeTS2022_01355, shape torch.Size([4, 138, 166, 136]), rank 0
+2026-11-13 15:08:19.164012: predicting FeTS2022_01367
+2026-11-13 15:08:19.530487: FeTS2022_01367, shape torch.Size([4, 138, 174, 134]), rank 0
+2026-11-13 15:10:03.959339: predicting FeTS2022_01370
+2026-11-13 15:10:04.520506: FeTS2022_01370, shape torch.Size([4, 139, 161, 130]), rank 0
+2026-11-13 15:11:14.200277: predicting FeTS2022_01376
+2026-11-13 15:11:14.759719: FeTS2022_01376, shape torch.Size([4, 142, 166, 144]), rank 0
+2026-11-13 15:12:24.388232: predicting FeTS2022_01379
+2026-11-13 15:12:24.698756: FeTS2022_01379, shape torch.Size([4, 140, 165, 130]), rank 0
+2026-11-13 15:13:34.385958: predicting FeTS2022_01383
+2026-11-13 15:13:34.720702: FeTS2022_01383, shape torch.Size([4, 140, 177, 126]), rank 0
+2026-11-13 15:15:19.131442: predicting FeTS2022_01405
+2026-11-13 15:15:19.923172: FeTS2022_01405, shape torch.Size([4, 144, 168, 132]), rank 0
+2026-11-13 15:16:29.564874: predicting FeTS2022_01414
+2026-11-13 15:16:29.872528: FeTS2022_01414, shape torch.Size([4, 130, 156, 129]), rank 0
+2026-11-13 15:17:39.500631: predicting FeTS2022_01424
+2026-11-13 15:17:40.110010: FeTS2022_01424, shape torch.Size([4, 137, 177, 139]), rank 0
+2026-11-13 15:19:24.558506: predicting FeTS2022_01456
+2026-11-13 15:19:24.993999: FeTS2022_01456, shape torch.Size([4, 134, 159, 133]), rank 0
+2026-11-13 15:20:34.631475: predicting FeTS2022_01478
+2026-11-13 15:20:34.894116: FeTS2022_01478, shape torch.Size([4, 139, 172, 134]), rank 0
+2026-11-13 15:22:19.321342: predicting FeTS2022_01479
+2026-11-13 15:22:19.663168: FeTS2022_01479, shape torch.Size([4, 139, 161, 136]), rank 0
+2026-11-13 15:23:29.353903: predicting FeTS2022_01497
+2026-11-13 15:23:29.745189: FeTS2022_01497, shape torch.Size([4, 139, 161, 137]), rank 0
+2026-11-13 15:24:39.367741: predicting FeTS2022_01499
+2026-11-13 15:24:39.894313: FeTS2022_01499, shape torch.Size([4, 143, 174, 137]), rank 0
+2026-11-13 15:26:24.303569: predicting FeTS2022_01516
+2026-11-13 15:26:24.735734: FeTS2022_01516, shape torch.Size([4, 133, 176, 144]), rank 0
+2026-11-13 15:28:09.166239: predicting FeTS2022_01524
+2026-11-13 15:28:09.580952: FeTS2022_01524, shape torch.Size([4, 131, 159, 138]), rank 0
+2026-11-13 15:29:19.196325: predicting FeTS2022_01544
+2026-11-13 15:29:19.704434: FeTS2022_01544, shape torch.Size([4, 140, 171, 141]), rank 0
+2026-11-13 15:31:04.121608: predicting FeTS2022_01566
+2026-11-13 15:31:05.020460: FeTS2022_01566, shape torch.Size([4, 150, 171, 135]), rank 0
+2026-11-13 15:32:49.444016: predicting FeTS2022_01573
+2026-11-13 15:32:50.281525: FeTS2022_01573, shape torch.Size([4, 135, 168, 135]), rank 0
+2026-11-13 15:33:59.900274: predicting FeTS2022_01592
+2026-11-13 15:34:00.590331: FeTS2022_01592, shape torch.Size([4, 149, 183, 129]), rank 0
+2026-11-13 15:35:45.075638: predicting FeTS2022_01593
+2026-11-13 15:35:45.471486: FeTS2022_01593, shape torch.Size([4, 138, 171, 124]), rank 0
+2026-11-13 15:37:29.943074: predicting FeTS2022_01604
+2026-11-13 15:37:30.317447: FeTS2022_01604, shape torch.Size([4, 138, 178, 128]), rank 0
+2026-11-13 15:39:14.712518: predicting FeTS2022_01623
+2026-11-13 15:39:16.134044: FeTS2022_01623, shape torch.Size([4, 143, 164, 132]), rank 0
+2026-11-13 15:40:25.744474: predicting FeTS2022_01627
+2026-11-13 15:40:26.284230: FeTS2022_01627, shape torch.Size([4, 149, 166, 128]), rank 0
+2026-11-13 15:41:35.914318: predicting FeTS2022_01632
+2026-11-13 15:41:36.317460: FeTS2022_01632, shape torch.Size([4, 147, 161, 135]), rank 0
+2026-11-13 15:42:45.948350: predicting FeTS2022_01634
+2026-11-13 15:42:46.407873: FeTS2022_01634, shape torch.Size([4, 146, 172, 145]), rank 0
+2026-11-13 15:44:30.815566: predicting FeTS2022_01636
+2026-11-13 15:44:31.265878: FeTS2022_01636, shape torch.Size([4, 149, 174, 141]), rank 0
+2026-11-13 15:46:15.767879: predicting FeTS2022_01644
+2026-11-13 15:46:16.579861: FeTS2022_01644, shape torch.Size([4, 132, 160, 128]), rank 0
+2026-11-13 15:47:26.196217: predicting FeTS2022_01650
+2026-11-13 15:47:26.625365: FeTS2022_01650, shape torch.Size([4, 143, 160, 133]), rank 0
+2026-11-13 15:48:36.265720: predicting FeTS2022_01653
+2026-11-13 15:48:36.658773: FeTS2022_01653, shape torch.Size([4, 135, 165, 127]), rank 0
+2026-11-13 15:49:46.276662: predicting FeTS2022_01663
+2026-11-13 15:49:46.794246: FeTS2022_01663, shape torch.Size([4, 140, 185, 145]), rank 0
+2026-11-13 15:53:04.129185: Validation complete
+2026-11-13 15:53:04.329938: Mean Validation Dice:  0.8235834844883826

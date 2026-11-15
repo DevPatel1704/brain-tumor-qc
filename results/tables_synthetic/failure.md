@@ -1,0 +1,26 @@
+| method | fold | score | n | n_failed | auroc | lo | hi | review_limit | flagged_frac | dice_mean_all | dice_mean_unflagged |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| stub_baseline | inst_1 | boundary_band | 12 | 6 | 0.833 | 0.496 | 1.000 | 0.293 | 0.667 | 0.851 | 0.939 |
+| stub_baseline | inst_1 | wt_mean | 12 | 6 | 0.778 | 0.400 | 1.000 | – | – | – | – |
+| stub_baseline | inst_1 | band_disagreement | 12 | 6 | 0.833 | 0.496 | 1.000 | – | – | – | – |
+| stub_baseline | inst_18 | boundary_band | 10 | 6 | 0.375 | 0.000 | 0.840 | 0.343 | 0.600 | 0.817 | 0.839 |
+| stub_baseline | inst_18 | wt_mean | 10 | 6 | 0.625 | 0.235 | 1.000 | – | – | – | – |
+| stub_baseline | inst_18 | band_disagreement | 10 | 6 | 0.375 | 0.000 | 0.840 | – | – | – | – |
+| stub_baseline | lgg_only | boundary_band | 6 | 3 | 1.000 | 1.000 | 1.000 | 0.304 | 0.833 | 0.752 | 0.976 |
+| stub_baseline | lgg_only | wt_mean | 6 | 3 | 1.000 | 1.000 | 1.000 | – | – | – | – |
+| stub_baseline | lgg_only | band_disagreement | 6 | 3 | 1.000 | 1.000 | 1.000 | – | – | – | – |
+| stub_baseline | small | boundary_band | 12 | 11 | 1.000 | 1.000 | 1.000 | 0.334 | 0.917 | 0.447 | 0.949 |
+| stub_baseline | small | wt_mean | 12 | 11 | 1.000 | 1.000 | 1.000 | – | – | – | – |
+| stub_baseline | small | band_disagreement | 12 | 11 | 1.000 | 1.000 | 1.000 | – | – | – | – |
+| stub_mitigated | inst_1 | boundary_band | 12 | 2 | 0.950 | 0.800 | 1.000 | 0.324 | 0.333 | 0.903 | 0.930 |
+| stub_mitigated | inst_1 | wt_mean | 12 | 2 | 0.950 | 0.800 | 1.000 | – | – | – | – |
+| stub_mitigated | inst_1 | band_disagreement | 12 | 2 | 0.900 | 0.625 | 1.000 | – | – | – | – |
+| stub_mitigated | inst_18 | boundary_band | 10 | 4 | 0.667 | 0.250 | 1.000 | 0.303 | 0.700 | 0.865 | 0.884 |
+| stub_mitigated | inst_18 | wt_mean | 10 | 4 | 0.792 | 0.333 | 1.000 | – | – | – | – |
+| stub_mitigated | inst_18 | band_disagreement | 10 | 4 | 0.625 | 0.200 | 1.000 | – | – | – | – |
+| stub_mitigated | lgg_only | boundary_band | 6 | 3 | 0.667 | 0.000 | 1.000 | 0.307 | 0.833 | 0.818 | 0.982 |
+| stub_mitigated | lgg_only | wt_mean | 6 | 3 | 0.778 | 0.200 | 1.000 | – | – | – | – |
+| stub_mitigated | lgg_only | band_disagreement | 6 | 3 | 0.667 | 0.000 | 1.000 | – | – | – | – |
+| stub_mitigated | small | boundary_band | 12 | 10 | 1.000 | 1.000 | 1.000 | 0.309 | 0.750 | 0.603 | 0.880 |
+| stub_mitigated | small | wt_mean | 12 | 10 | 0.950 | 0.778 | 1.000 | – | – | – | – |
+| stub_mitigated | small | band_disagreement | 12 | 10 | 1.000 | 1.000 | 1.000 | – | – | – | – |

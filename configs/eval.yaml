@@ -1,0 +1,26 @@
+# Evaluation conventions and statistics.
+metrics:
+  regions: [WT, TC, ET]
+  surface_metrics: [hd95, asd]
+  empty_mask:
+    both_empty: {dice: 1.0, hd95: 0.0, asd: 0.0}
+    one_empty: {dice: 0.0}
+    # Diagonal of the 240x240x155 grid at 1 mm: sqrt(240^2 + 240^2 + 155^2).
+    # Used as HD95/ASD when exactly one of reference and prediction is empty.
+    # Same constant as published BraTS-family evaluations (arXiv:2410.22057);
+    # BraTS 2023 glioma reports use 374 (see docs/metrics.md).
+    penalty_mm: 373.13
+  report_no_et_separately: true
+
+statistics:
+  bootstrap_resamples: 2000        # case-level, >= 1000 required
+  ci_alpha: 0.05
+  seed: 0
+  paired_test: wilcoxon            # scipy.stats.wilcoxon, two-sided, zero_method=wilcox
+  correlation: spearman
+  small_group_warning_n: 15        # groups smaller than this are marked "small n"
+
+outputs:
+  results_dir: results
+  figures_dir: results/figures
+  tables_dir: docs/report/tables

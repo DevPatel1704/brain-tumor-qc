@@ -1,0 +1,21 @@
+# Dashboard backend settings.
+processed_root: data/processed
+predictions_root: results/predictions
+results_dir: results
+sitegroups: data/sitegroups.json
+review_db: data/review.sqlite
+web_dir: web
+
+# Which prediction set the dashboard shows, in order of preference. Records
+# whose meta.source is "example" are always labeled EXAMPLE in the UI.
+methods: [baseline, example_rule_based]
+
+# Review limit shown by default: the limit chosen on in-site validation of fold "mid"
+# by the configs/uncertainty.yaml rule (results/e5_failure.json, 2026-11-13 run).
+default_review_limit: 0.173
+
+# Upload limits for POST /api/predict (only enabled when a CUDA GPU and a
+# trained model are available).
+max_upload_mb: 64
+allow_cpu_inference: false
+model_folder: null   # nnU-Net trained model folder for live inference

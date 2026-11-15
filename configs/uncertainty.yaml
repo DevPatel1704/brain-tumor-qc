@@ -1,0 +1,51 @@
+# Uncertainty, failure definition and trust gate.
+# Rule 8 of the project brief: tau and the review-limit rule are fixed here and
+# committed BEFORE any held-out evaluation is run. Changing them afterwards
+# invalidates the held-out failure-detection results; record any change in
+# docs/deviations.md with the reason.
+#
+# Decided: 2026-10-31, before any model was trained (no in-site validation
+# distribution exists yet). tau = 0.70 is chosen a priori: published FeTS 2022
+# 3D U-Net baselines reach mean WT Dice about 0.93 and ET about 0.87 on
+# training institutions (Manthe et al. 2024), so a case below 0.70 in WT or ET
+# is far outside the expected in-site range and would need manual correction.
+
+failure:
+  tau: 0.70            # case fails if WT Dice < tau OR ET Dice < tau
+  regions: [WT, ET]
+  # Cases without enhancing tumor in the reference: ET Dice follows the
+  # empty-mask convention in configs/eval.yaml (1 if the prediction has no ET
+  # either, 0 otherwise). They are also reported separately.
+
+voxel_uncertainty:
+  members: [ensemble, tta_flips]   # what is averaged before the entropy
+  measure: predictive_entropy      # binary entropy (bits) of the mean sigmoid, per region
+  reduce: mean                     # mean over WT, TC, ET -> one voxel map in [0, 1]
+
+case_score:
+  primary: boundary_band
+  band_width_voxels: 3             # band = dilate(WT, 3) AND NOT erode(WT, 3)
+  alternatives: [wt_mean, band_disagreement]
+
+gate:
+  # flag = score > review_limit; NaN score -> flag (fail-safe).
+  # review_limit is chosen on IN-SITE VALIDATION cases of each fold with this
+  # rule, then applied unchanged to the held-out group.
+  review_limit_rule:
+    method: quantile
+    q: 0.80                        # flag about 20 % of in-site validation cases
+  # Value used by the dashboard when no fold-specific limit has been computed.
+  default_review_limit: 0.25
+
+calibration:
+  n_bins: 15                       # equal-width bins on [0, 1]
+  modes: [band, volume]
+  band_width_voxels: 5             # dilate(pred WT OR ref WT, 5) inside the brain mask
+
+bootstrap:
+  n_resamples: 2000
+  seed: 0
+  alpha: 0.05
+
+risk_coverage:
+  report_coverage: 0.80

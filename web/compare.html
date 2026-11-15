@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>BTQC · Compare scans</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="ws-body">
+<header class="topbar" id="topbar"></header>
+<div class="cmp-body" id="cmp" data-mode="side">
+  <div class="cmp-bar">
+    <div class="grp"><span class="lbl">Mode</span>
+      <div class="seg" role="radiogroup" aria-label="Comparison mode" id="cmpMode">
+        <button type="button" role="radio" data-value="side" aria-checked="true">Side by side</button>
+        <button type="button" role="radio" data-value="flicker" aria-checked="false">Flicker</button>
+        <button type="button" role="radio" data-value="split" aria-checked="false">Split</button>
+        <button type="button" role="radio" data-value="diff" aria-checked="false" id="modeDiff">Difference</button>
+      </div>
+    </div>
+    <div class="grp"><span class="lbl">View</span>
+      <div class="seg" role="radiogroup" aria-label="View" id="cmpView">
+        <button type="button" role="radio" data-value="all" aria-checked="true">All</button>
+        <button type="button" role="radio" data-value="axial" aria-checked="false">Axial</button>
+        <button type="button" role="radio" data-value="coronal" aria-checked="false">Coronal</button>
+        <button type="button" role="radio" data-value="sagittal" aria-checked="false">Sagittal</button>
+        <button type="button" role="radio" data-value="3d" aria-checked="false">3D</button>
+      </div>
+    </div>
+    <span style="flex:1"></span>
+    <span class="geo none" id="geo" tabindex="0"><span class="dot"></span><span id="geoT">Load two scans</span></span>
+    <button class="btn sm" type="button" id="syncBtn" aria-expanded="false" aria-controls="syncPop"></button>
+    <button class="btn sm ghost" type="button" id="resetBoth"></button>
+    <div class="pop syncpop" id="syncPop" hidden>
+      <label class="check"><input type="checkbox" class="switch" data-sync="cross" checked><span>Crosshairs (full 3D position)</span></label>
+      <label class="check"><input type="checkbox" class="switch" data-sync="slice" checked><span>Slice navigation</span></label>
+      <label class="check"><input type="checkbox" class="switch" data-sync="zoom" checked><span>Zoom (same mm per pixel)</span></label>
+      <label class="check"><input type="checkbox" class="switch" data-sync="pan" checked><span>Pan</span></label>
+      <label class="check"><input type="checkbox" class="switch" data-sync="display"><span>Display mode and contrast</span></label>
+      <label class="check"><input type="checkbox" class="switch" data-sync="cam" checked><span>3D rotation</span></label>
+      <p class="help" id="syncHelp">Positions are matched through physical (scanner) coordinates, never by voxel index alone.</p>
+    </div>
+  </div>
+  <div class="cmp-main" id="cmpMain">
+    <section class="side" data-side="A" id="sideA" aria-label="Scan A"></section>
+    <section class="side" data-side="B" id="sideB" aria-label="Scan B"></section>
+  </div>
+  <div class="cmp-stage" id="cmpStage" hidden>
+    <canvas id="stageCv" role="img" aria-label="Comparison view"></canvas>
+    <div class="stage-labels"><span class="tag" id="tagA"><span class="side-tag">A</span><span id="tagAT">Scan A</span></span><span class="tag" id="tagB"><span class="side-tag" style="background:var(--warm);color:var(--warm-ink)">B</span><span id="tagBT">Scan B</span></span></div>
+    <div class="divider" id="divider" hidden role="slider" tabindex="0" aria-label="Split position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></div>
+    <div class="cover" id="stageCover"><div class="cover-card idle"><p id="stageCoverT"></p></div></div>
+    <div class="stage-foot">
+      <input type="range" class="scrub" id="stScrub" min="0" max="0" value="0" aria-label="Slice">
+      <span>Slice <span class="val" id="stPos">–</span></span>
+      <span>A <span class="val" id="stA">–</span></span><span>B <span class="val" id="stB">–</span></span>
+      <span id="flkCtl" hidden style="display:inline-flex;align-items:center;gap:8px"><button class="ibtn" type="button" id="flkPlay" aria-label="Pause flicker" aria-pressed="true"></button>
+        <span>Interval</span><input type="range" id="flkRate" min="200" max="1600" step="50" value="600" style="width:110px" aria-label="Flicker interval"><span class="val" id="flkRateO">600 ms</span></span>
+      <span id="diffCtl" hidden class="diffbar"><span>B lower</span><span class="cb" id="diffCb"></span><span>A lower</span>
+        <span>Gain</span><input type="range" id="diffGain" min="100" max="600" value="200" style="width:90px" aria-label="Difference gain"><span class="val" id="diffGainO">2.0×</span></span>
+    </div>
+  </div>
+  <details class="cmp-meta" id="cmpMeta">
+    <summary>Scan metadata comparison</summary>
+    <div class="table-wrap"><table class="data" id="metaTbl"><thead><tr><th>Property</th><th>Scan A</th><th>Scan B</th></tr></thead><tbody></tbody></table></div>
+  </details>
+</div>
+<script type="module" src="src/compare.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# Site groups for the site-held-out protocol. Only RULES live here; group
+# membership is computed from the manifest's institution column by
+# `make sitegroups` (btqc.data.sitegroups) and written to data/sitegroups.json.
+# Rules are applied in this order; the first matching rule wins, so LGG-only
+# takes precedence over every other rule.
+rules:
+  - name: lgg_only
+    institutions: [12, 13, 14, 15]
+    note: LGG-only institutions; read results as site-plus-grade shift
+  - name: inst_1
+    institutions: [1]
+  - name: inst_18
+    institutions: [18]
+  - name: small
+    max_cases: 14          # institutions with fewer than 15 cases, merged
+  - name: mid
+    otherwise: true        # remaining (mid-size) institutions
+
+splits:
+  seed: 12345
+  # Non-held-out cases of each fold, stratified by institution:
+  fractions: {train: 0.8, val: 0.1, insite_test: 0.1}

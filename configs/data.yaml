@@ -1,0 +1,27 @@
+# Data locations and conventions. The raw root is treated as read-only.
+# Override the raw root without editing this file: BTQC_RAW_ROOT=/path make data-report
+# Junction folder holding TrainingData (1251 labeled) and ValidationData (219 unlabeled).
+raw_root: ../FeTS2022_all
+
+# Subject-to-institution table (FeTS 2022 partitioning CSV, columns
+# Partition_ID, Subject_ID). Not present in the validation download.
+institution_table: ../MICCAI_FeTS2022_TrainingData/partitioning_1.csv
+# Extra folders searched for a partition / institution CSV in Phase 0.
+institution_search_dirs: []
+
+manifest: data/manifest.csv
+file_inventory: data/file_inventory.csv
+processed_root: data/processed
+nnunet_raw: data/nnUNet_raw
+nnunet_preprocessed: data/nnUNet_preprocessed
+nnunet_results: data/nnUNet_results
+
+sequences: [t1, t1ce, t2, flair]
+# nnU-Net channel order: _0000=t1, _0001=t1ce, _0002=t2, _0003=flair
+# (same order as nnU-Net's own Dataset137_BraTS21 conversion script).
+channel_order: [t1, t1ce, t2, flair]
+
+# Viewer bundles: uint8 between these percentiles of nonzero voxels.
+viewer_window_percentiles: [1, 99]
+
+workers: 4

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>BTQC · Uncertainty-aware brain tumor imaging</title>
+<meta name="description" content="BTQC: a research prototype for uncertainty-gated brain tumor segmentation on FeTS 2022 multi-institution MRI. Not a medical device.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="home">
+<header class="topbar" id="topbar"></header>
+<main>
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-copy">
+      <div class="hero-mark enter" style="--i:0"><span id="heroLogo"></span><span class="wordmark">BTQC</span><span class="tag">Brain Tumor Quantification &amp; Confidence</span></div>
+      <h1 id="heroTitle" class="enter" style="--i:1">Understanding Brain Tumors Through <span class="grad">Uncertainty-Aware Imaging</span></h1>
+      <p class="lede enter" style="--i:2">A research platform for glioma segmentation on multi-institution MRI. BTQC wraps nnU-Net v2, measures where a segmentation is uncertain, and tests how it holds up at hospitals it has never seen, using FeTS 2022 data.</p>
+      <div class="cta enter" style="--i:3">
+        <a class="btn primary lg" href="viewer.html" id="ctaWorkspace">Open Imaging Workspace <span id="ctaArrow"></span></a>
+        <a class="btn ghost lg" href="#research" id="ctaResearch">Explore Research</a>
+      </div>
+      <div class="hero-facts enter" style="--i:4">
+        <span>Cases available <b id="fCases">–</b></span>
+        <span>Sequences <b>T1 · T1ce · T2 · FLAIR</b></span>
+        <span>Trained-model results <b id="fModel">–</b></span>
+      </div>
+    </div>
+    <div class="hero-visual enter" style="--i:2" id="heroVis">
+      <div class="orbit o3" aria-hidden="true"></div><div class="orbit" aria-hidden="true"></div><div class="orbit o2" aria-hidden="true"></div>
+      <div class="stage3d" id="stage3d">
+        <canvas id="heroGl" role="img" aria-label="Live 3D rendering of an MRI volume from the dataset; drag to rotate"></canvas>
+        <div class="skel-ring" aria-hidden="true"></div>
+        <div class="fallback" id="heroFallback" hidden></div>
+      </div>
+      <div class="slice-chip c1" aria-hidden="true"><canvas id="sliceA" width="200" height="200"></canvas><span class="lab" id="sliceALab">Axial</span><span class="lab2" id="sliceAPos"></span></div>
+      <div class="slice-chip c2" aria-hidden="true"><canvas id="sliceB" width="168" height="168"></canvas><span class="lab" id="sliceBLab">Coronal</span><span class="lab2" id="sliceBPos"></span></div>
+      <div class="hero-caption" id="heroCap"><span class="live" aria-hidden="true"></span><span id="heroCapT">Preparing a live render from the dataset…</span></div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true"></div>
+  </section>
+
+  <section class="section" id="capabilities" aria-labelledby="capTitle">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Capabilities</span>
+      <h2 id="capTitle">One workspace, from voxels to evidence</h2>
+      <p>Inspect a scan, compare two, see where a segmentation is unsure, and check how a model behaves at institutions held out of training.</p>
+    </div>
+    <div class="features" id="features"></div>
+  </section>
+
+  <section class="section" id="research" aria-labelledby="resTitle">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Research design</span>
+      <h2 id="resTitle">Transparent by construction</h2>
+      <p>Every number in this interface comes from a script and a config file in the repository. Where no result exists, the interface says so rather than filling the gap.</p>
+    </div>
+    <div class="pipeline" data-reveal>
+      <div class="pstep"><span class="n">01 · DATA</span><h3>Multi-institution MRI</h3><p>FeTS 2022 glioma scans with four sequences, converted to canonical RAS. A planted voxel round-trips through Python and the browser.</p></div>
+      <div class="pstep"><span class="n">02 · SEGMENTATION</span><h3>nnU-Net v2</h3><p>Region-based whole tumor, tumor core and enhancing tumor, trained with a site-held-out fold: the seven institutions of group <code>mid</code> never seen in training (laptop pilot, 10 epochs).</p></div>
+      <div class="pstep"><span class="n">03 · UNCERTAINTY</span><h3>Boundary-band score</h3><p>Entropy of the ensemble and flip-TTA mean, averaged in a 3-voxel band around the predicted tumor boundary.</p></div>
+      <div class="pstep"><span class="n">04 · REVIEW GATE</span><h3>One advisory rule</h3><p><code>flag = score &gt; review limit</code>, and nothing else. A missing score is flagged. The limit is fixed before held-out evaluation.</p></div>
+    </div>
+    <div class="status-grid">
+      <div class="card" data-reveal>
+        <h2>Live project status</h2>
+        <p class="help" style="margin:-6px 0 10px">Read from this installation's API just now.</p>
+        <div class="statlist" id="statlist"><div><span>Loading…</span><b></b></div></div>
+      </div>
+      <div class="card" data-reveal style="--i:1">
+        <h2>What this prototype is not</h2>
+        <ul class="mc-sec" style="margin:0;padding:0;list-style:none;display:grid;gap:10px" id="notList">
+          <li>Not a medical device, and not for diagnosis or treatment decisions.</li>
+          <li>The trust flag is advisory. It depends only on an uncertainty score and a review limit.</li>
+          <li>It does not estimate tumor grade or stage.</li>
+          <li>A laptop pilot: one held-out site group, 10 training epochs, a sampled test set. The 219 unlabeled validation scans still show rule-based EXAMPLE outlines.</li>
+        </ul>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+          <a class="btn sm" href="model-card.html">Read the model card</a>
+          <a class="btn sm ghost" href="explorer.html">Generalization explorer</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="in">
+    <span><b style="color:var(--ink-2)">BTQC</b> <span id="ver"></span> · Research prototype only. Not a medical device and not for diagnosis.</span>
+    <span>Local-first: patient data never leaves this machine.</span>
+  </div>
+</footer>
+<script type="module" src="src/home.js"></script>
+</body>
+</html>

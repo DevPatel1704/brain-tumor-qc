@@ -1,0 +1,23 @@
+{
+ "status": "ok",
+ "pytest_summary": "179 passed, 27 deselected in 141.53s (0:02:21)",
+ "returncode": 0,
+ "coverage_percent": 81.34482758620689,
+ "elapsed_s": 182.5,
+ "performance": {
+  "shape": [
+   240,
+   240,
+   155
+  ],
+  "convert_case_s": 25.69,
+  "convert_peak_traced_mb": 266.7,
+  "stub_members_uncertainty_scores_s": 16.83,
+  "uncertainty_peak_traced_mb": 953.6,
+  "gate_decisions_per_s": 39988,
+  "viewer_bundle_mb_all_sequences_plus_seg": 8.8,
+  "note": "synthetic case, CPU; GPU model latency (R8) not run"
+ },
+ "ui": "not run (tests/ui)",
+ "latency_R8": "not run: needs a trained model and a GPU (target 60 s per case)"
+}

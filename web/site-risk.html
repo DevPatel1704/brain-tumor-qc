@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>BTQC · Site risk</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar" id="topbar"></header>
+<main class="page">
+  <div class="page-head enter">
+    <div>
+      <span class="eyebrow">Research · distribution shift</span>
+      <h1>Site risk report</h1>
+      <p class="sub">For a batch of unlabeled scans from a new site: intensity shift against the reference pool, and an <b>estimate</b> of expected accuracy from the shift-versus-gap relationship learned on the held-out folds.</p>
+    </div>
+  </div>
+  <p class="notrun enter" id="status" style="--i:1">Loading…</p>
+  <p class="example enter" id="refNote" hidden style="--i:2;margin-top:12px"></p>
+  <section class="kpis enter" id="kpis" style="--i:2;margin-top:16px" hidden></section>
+  <div class="grid2">
+    <section class="card chartcard" id="cShift"></section>
+    <section class="card chartcard" id="cKs"></section>
+  </div>
+  <div class="grid2">
+    <section class="card chartcard" id="cCases"></section>
+    <section class="card" id="cEst"></section>
+  </div>
+</main>
+<script type="module" src="src/siterisk.js"></script>
+</body>
+</html>

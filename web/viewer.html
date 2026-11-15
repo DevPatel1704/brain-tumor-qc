@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>BTQC · Imaging workspace</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="ws-body">
+<header class="topbar" id="topbar"></header>
+<div class="ws" id="app">
+  <aside class="rail" aria-label="Workspace controls">
+    <div class="rail-tabs seg" role="radiogroup" aria-label="Panel" id="railTabs">
+      <button type="button" role="radio" data-value="display" aria-checked="true">Display</button>
+      <button type="button" role="radio" data-value="report" aria-checked="false">Report <span class="ddot" id="repDot" hidden></span></button>
+      <button type="button" role="radio" data-value="case" aria-checked="false">Case</button>
+    </div>
+    <div class="rail-scroll">
+      <!-- Display -->
+      <div class="rail-panel" data-tab="display">
+        <section class="rsec">
+          <h2>Display mode</h2>
+          <div class="modes" role="radiogroup" aria-label="Display mode" id="modes">
+            <button type="button" class="mode" role="radio" data-value="gray" id="modeGray" aria-checked="true"><span class="sw g"></span>Grayscale</button>
+            <button type="button" class="mode" role="radio" data-value="color" id="modeColor" aria-checked="false"><span class="sw" id="swColor"></span>Pseudocolor</button>
+            <button type="button" class="mode" role="radio" data-value="seg" id="modeSeg" aria-checked="false" disabled><span class="sw s"></span>MRI + segmentation</button>
+          </div>
+          <p class="help" id="modeHelp">Original grayscale display of the stored intensities.</p>
+        </section>
+
+        <section class="rsec">
+          <h2 id="seqH">Sequence <span class="badge" id="seqSrc">from dataset</span></h2>
+          <div class="seg" role="radiogroup" aria-labelledby="seqH" id="seq"></div>
+          <p class="help" id="seqFull"></p>
+        </section>
+
+        <section class="rsec" id="secColor" hidden>
+          <h2>Color map</h2>
+          <div class="cmaps" role="radiogroup" aria-label="Color map" id="cmaps"></div>
+          <p class="help" id="cmapNote" style="margin-top:6px"></p>
+          <div class="colorbar" aria-hidden="true"><div class="cb" id="cbar"></div><div class="cbl"><span id="cbLo">1st pct</span><span id="cbMid"></span><span id="cbHi">99th pct</span></div></div>
+          <div class="callout pseudo-note" id="pseudoNote"><svg class="ic" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M8 7.2v3.8M8 5h.01"/></svg>
+            <span><b>Pseudocolor is a display transform.</b> Colors encode the windowed <span id="pcSeq">T1</span> intensity only and add no biological information. Voxel values are unchanged; background (zero) stays black.</span></div>
+        </section>
+
+        <section class="rsec" id="secSeg" hidden>
+          <h2>Segmentation overlay <span class="badge example" id="ovBadge" hidden>Example</span></h2>
+          <label class="check"><input id="layTum" type="checkbox" class="switch" checked><span>Tumor regions</span></label>
+          <div class="regions" id="regions"></div>
+          <label class="check"><input id="layUnc" type="checkbox" class="switch warm"><span>Uncertainty heat map</span></label>
+          <div class="heat" aria-hidden="true"></div>
+          <div class="heatlab"><span>certain</span><span>uncertain</span></div>
+          <label class="check" style="margin-top:12px"><input id="layRef" type="checkbox" class="switch" disabled><span>Show reference mask instead</span></label>
+          <div class="row" style="margin-top:12px"><label for="ovA">Opacity</label><input id="ovA" type="range" min="10" max="100" value="55"><output id="ovAO">55</output></div>
+          <div class="row"><span>Style</span><div class="seg" role="radiogroup" aria-label="Overlay style" id="segStyle"><button type="button" role="radio" data-value="fill" aria-checked="true">Fill</button><button type="button" role="radio" data-value="outline" aria-checked="false">Outline</button></div><span></span></div>
+          <div class="row"><span>MRI base</span><div class="seg" role="radiogroup" aria-label="MRI base" id="segBase"><button type="button" role="radio" data-value="gray" aria-checked="true">Gray</button><button type="button" role="radio" data-value="color" aria-checked="false">Color</button></div><span></span></div>
+        </section>
+
+        <section class="rsec">
+          <h2>Intensity <button class="btn sm ghost" id="winReset" type="button">Reset</button></h2>
+          <div class="row"><label for="lvl">Level</label><input id="lvl" type="range" min="0" max="100" value="50"><output id="lvlO">50</output></div>
+          <div class="row"><label for="win">Window</label><input id="win" type="range" min="2" max="100" value="100"><output id="winO">100</output></div>
+          <div class="row"><label for="gam">Gamma</label><input id="gam" type="range" min="40" max="250" value="100"><output id="gamO">1.00</output></div>
+          <p class="help">Level shifts brightness and window sets contrast on the normalized scale (1st to 99th percentile of brain intensity). Gamma bends the curve. All three change the display only.</p>
+        </section>
+      </div>
+
+      <!-- Report -->
+      <div class="rail-panel" data-tab="report" hidden>
+        <section class="rsec" aria-live="polite">
+          <p class="empty" id="rpEmpty">No prediction for this case.</p>
+          <div id="rpBody" hidden>
+            <div class="flag" id="flagBox" data-testid="flag">
+              <span class="dot" aria-hidden="true"></span>
+              <div><h3 id="flagTitle">Needs review</h3><p id="flagWhy"></p><span class="adv">Advisory · uncertainty score versus review limit only</span></div>
+            </div>
+            <div class="meterwrap">
+              <div class="meterhead"><span>Boundary uncertainty</span><b id="scoreVal">–</b></div>
+              <div class="meter"><span class="tick score" id="tickScore"></span><span class="tick thr" id="tickThr"></span></div>
+              <div class="metercap"><span><i style="background:var(--ink)"></i>this scan</span><span><i style="background:var(--warm)"></i>review limit</span></div>
+              <div class="row" style="margin-top:14px;grid-template-columns:92px minmax(0,1fr) 44px">
+                <label for="thrFlag">Review limit</label><input id="thrFlag" class="warm" type="range" min="0" max="100" value="25"><output id="thrFlagO">0.25</output>
+              </div>
+              <p class="help">Configured default <span class="mono" id="thrDefault">0.25</span> (configs/uncertainty.yaml). Changing it here affects this view only.</p>
+            </div>
+            <button class="btn block" id="goHot" type="button" style="margin-top:14px"></button>
+            <div class="sep"></div>
+            <h2 class="rhead">Predicted volumes <span class="badge" id="srcBadge"></span></h2>
+            <dl class="tbl">
+              <dt>Whole tumor</dt><dd id="vWT">–</dd>
+              <dt>Tumor core</dt><dd id="vTC">–</dd>
+              <dt><i style="background:var(--seg-et)"></i>Enhancing tumor</dt><dd id="vET">–</dd>
+              <dt><i style="background:var(--seg-ed)"></i>Edema</dt><dd id="vED">–</dd>
+              <dt>Hemisphere</dt><dd id="loc">–</dd>
+            </dl>
+            <p class="help">Tumor grade or stage is not estimated: grade is established from tissue and molecular findings.</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- Case -->
+      <div class="rail-panel" data-tab="case" hidden>
+        <section class="rsec">
+          <h2>Case</h2>
+          <p class="sub" id="caseLine" style="margin:0 0 12px">No case loaded.</p>
+          <dl class="kv" id="meta"></dl>
+        </section>
+        <section class="rsec">
+          <h2>Local files</h2>
+          <div class="drop" id="drop">
+            <svg class="ic" width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10.5V2.5M4.5 6 8 2.5 11.5 6M2.5 10.5v2a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-2"/></svg>
+            <label for="fileIn">Drop .nii or .nii.gz files here or choose them. They stay in this browser and are not uploaded.</label>
+            <input id="fileIn" type="file" multiple accept=".nii,.gz">
+          </div>
+          <p class="msg" id="msg" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+    </div>
+  </aside>
+
+  <main class="stage" id="stage">
+    <div class="stage-bar">
+      <div class="casebox">
+        <button class="ibtn" type="button" id="casePrev" aria-label="Previous case" data-tip="Previous case"></button>
+        <select id="casePick" aria-label="Case"><option value="">Loading cases…</option></select>
+        <button class="ibtn" type="button" id="caseNext" aria-label="Next case" data-tip="Next case"></button>
+      </div>
+      <span class="chip" id="seqChip" title="Sequence">–</span>
+      <span class="chip" id="modeChip" title="Display mode">Grayscale</span>
+      <button class="chip flagchip" type="button" id="flagChip" hidden><span class="dot"></span><span id="flagChipT"></span></button>
+      <span class="grow"></span>
+      <div class="seg" role="radiogroup" aria-label="Panel layout" id="layout">
+        <button type="button" role="radio" data-value="grid" aria-checked="true" aria-label="2 by 2 grid"></button>
+        <button type="button" role="radio" data-value="focus" aria-checked="false" aria-label="Main view with strip"></button>
+        <button type="button" role="radio" data-value="row" aria-checked="false" aria-label="Single row"></button>
+        <button type="button" role="radio" data-value="single" aria-checked="false" aria-label="Single view"></button>
+      </div>
+      <div class="tgroup">
+        <button class="ibtn" type="button" id="crossAll" aria-pressed="true" aria-label="Crosshairs" data-tip="Crosshairs"></button>
+        <button class="ibtn" type="button" id="resetView" aria-label="Reset views" data-tip="Reset views"></button>
+        <button class="ibtn" type="button" id="keysBtn" aria-label="Keyboard shortcuts" data-tip="Shortcuts"></button>
+        <button class="ibtn" type="button" id="fsBtn" aria-label="Full screen" data-tip="Full screen"></button>
+      </div>
+    </div>
+    <div class="banner" id="exampleNote" hidden></div>
+    <div class="views-host" id="viewsHost" data-views-host></div>
+    <div class="status" id="status">
+      <span>Voxel (file)<b id="sVox">–</b></span>
+      <span>RAS index<b id="sRas">–</b></span>
+      <span>World mm<b id="sWorld">–</b></span>
+      <span>Signal<b id="sSig">–</b></span>
+      <span id="sLabWrap" hidden>Region<b id="sLab">–</b></span>
+      <span id="sUncWrap" hidden>Uncertainty<b id="sUnc">–</b></span>
+      <span>Size<b id="sDim">–</b></span>
+      <span>Spacing<b id="sSp">–</b></span>
+    </div>
+    <div class="cover on" id="cover"><div class="cover-card idle" id="coverCard"><div class="ring"></div><p id="coverT">Choose a case or open local files.</p><div class="prog"><i id="coverP"></i></div></div></div>
+  </main>
+</div>
+<dialog class="dlg" id="keysDlg">
+  <form method="dialog">
+    <h2>Keyboard and mouse</h2>
+    <div class="shortcuts">
+      <span><span class="kbd">1</span> <span class="kbd">2</span> <span class="kbd">3</span></span><span>Focus axial, coronal, sagittal</span>
+      <span><span class="kbd">↑</span> <span class="kbd">↓</span> / wheel</span><span>Move through slices</span>
+      <span><span class="kbd">Ctrl</span> + wheel</span><span>Zoom at the pointer</span>
+      <span><span class="kbd">+</span> <span class="kbd">−</span> <span class="kbd">0</span></span><span>Zoom in, out, fit</span>
+      <span>Right-drag / <span class="kbd">Shift</span>+drag</span><span>Pan</span>
+      <span>Double-click</span><span>Fit the view</span>
+      <span><span class="kbd">C</span> <span class="kbd">F</span></span><span>Toggle crosshair, maximize</span>
+    </div>
+    <div class="dlg-actions"><button class="btn" value="close" type="submit">Close</button></div>
+  </form>
+</dialog>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>

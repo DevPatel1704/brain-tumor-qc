@@ -1,0 +1,26 @@
+| method | fold | region | insite_mean | heldout_mean | gap | gap_lo | gap_hi | n_heldout | small_n |
+|---|---|---|---|---|---|---|---|---|---|
+| stub_baseline | inst_1 | WT | 0.966 | 0.965 | 0.002 | -0.015 | 0.025 | 12 | yes |
+| stub_baseline | inst_1 | TC | 0.904 | 0.908 | -0.005 | -0.045 | 0.046 | 12 | yes |
+| stub_baseline | inst_1 | ET | 0.665 | 0.679 | -0.014 | -0.168 | 0.160 | 12 | yes |
+| stub_baseline | inst_18 | WT | 0.978 | 0.940 | 0.037 | 0.011 | 0.068 | 10 | yes |
+| stub_baseline | inst_18 | TC | 0.905 | 0.837 | 0.068 | -0.008 | 0.157 | 10 | yes |
+| stub_baseline | inst_18 | ET | 0.660 | 0.674 | -0.014 | -0.250 | 0.251 | 10 | yes |
+| stub_baseline | lgg_only | WT | 0.975 | 0.935 | 0.040 | 0.006 | 0.076 | 6 | yes |
+| stub_baseline | lgg_only | TC | 0.920 | 0.822 | 0.098 | 0.011 | 0.182 | 6 | yes |
+| stub_baseline | lgg_only | ET | 0.700 | 0.498 | 0.202 | -0.214 | 0.599 | 6 | yes |
+| stub_baseline | small | WT | 0.975 | 0.790 | 0.185 | 0.119 | 0.243 | 12 | yes |
+| stub_baseline | small | TC | 0.921 | 0.458 | 0.463 | 0.339 | 0.579 | 12 | yes |
+| stub_baseline | small | ET | 0.765 | 0.094 | 0.671 | 0.515 | 0.758 | 12 | yes |
+| stub_mitigated | inst_1 | WT | 0.981 | 0.979 | 0.001 | -0.009 | 0.012 | 12 | yes |
+| stub_mitigated | inst_1 | TC | 0.937 | 0.940 | -0.003 | -0.027 | 0.023 | 12 | yes |
+| stub_mitigated | inst_1 | ET | 0.809 | 0.791 | 0.018 | -0.070 | 0.111 | 12 | yes |
+| stub_mitigated | inst_18 | WT | 0.985 | 0.965 | 0.020 | 0.009 | 0.030 | 10 | yes |
+| stub_mitigated | inst_18 | TC | 0.929 | 0.897 | 0.032 | 0.005 | 0.061 | 10 | yes |
+| stub_mitigated | inst_18 | ET | 0.789 | 0.731 | 0.057 | -0.099 | 0.226 | 10 | yes |
+| stub_mitigated | lgg_only | WT | 0.984 | 0.935 | 0.050 | 0.017 | 0.083 | 6 | yes |
+| stub_mitigated | lgg_only | TC | 0.950 | 0.845 | 0.105 | 0.043 | 0.164 | 6 | yes |
+| stub_mitigated | lgg_only | ET | 0.847 | 0.674 | 0.173 | -0.093 | 0.464 | 6 | yes |
+| stub_mitigated | small | WT | 0.977 | 0.895 | 0.082 | 0.045 | 0.119 | 12 | yes |
+| stub_mitigated | small | TC | 0.928 | 0.643 | 0.285 | 0.162 | 0.415 | 12 | yes |
+| stub_mitigated | small | ET | 0.771 | 0.271 | 0.500 | 0.314 | 0.683 | 12 | yes |

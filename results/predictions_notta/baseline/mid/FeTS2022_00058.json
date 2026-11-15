@@ -1,0 +1,43 @@
+{
+ "case_id": "FeTS2022_00058",
+ "source": "model",
+ "n_members": 1,
+ "flips": [
+  []
+ ],
+ "seconds": 11.531844854354858,
+ "method": "baseline",
+ "fold": "mid",
+ "member_indices": [
+  3
+ ],
+ "model_dir": "D:\\Foundation Project\\brain-tumor-qc\\data\\nnUNet_results\\Dataset501_FeTS2022\\nnUNetTrainer_btqc__nnUNetPlans_3GB__3d_fullres",
+ "volumes_ml": {
+  "WT": 36.856,
+  "TC": 10.408,
+  "ET": 7.228,
+  "NCR": 3.18,
+  "ED": 26.448
+ },
+ "hemisphere": "left",
+ "centroid": [
+  91.20854135011939,
+  69.74698827870631,
+  66.4496147167354
+ ],
+ "hot_spot": [
+  101,
+  69,
+  47
+ ],
+ "scores": {
+  "boundary_band": 0.14877203106880188,
+  "wt_mean": 0.10460622608661652,
+  "band_disagreement": 0.0
+ },
+ "spacing": [
+  1.0,
+  1.0,
+  1.0
+ ]
+}

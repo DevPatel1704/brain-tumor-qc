@@ -1,0 +1,50 @@
+{
+ "status": "ok",
+ "fold": "mid",
+ "per_group": 30,
+ "patch": [
+  80,
+  112,
+  80
+ ],
+ "feature": "global-average-pooled encoder bottleneck of the trained baseline",
+ "reference": "fold training pool without the group's own cases",
+ "rows": [
+  {
+   "group": "inst_1",
+   "role": "in training",
+   "n": 30,
+   "n_reference": 90,
+   "frechet": 0.13097710948284283
+  },
+  {
+   "group": "inst_18",
+   "role": "in training",
+   "n": 30,
+   "n_reference": 90,
+   "frechet": 0.061750903908282744
+  },
+  {
+   "group": "lgg_only",
+   "role": "in training",
+   "n": 30,
+   "n_reference": 90,
+   "frechet": 0.19379747058405866
+  },
+  {
+   "group": "small",
+   "role": "in training",
+   "n": 30,
+   "n_reference": 90,
+   "frechet": 0.0839705666599923
+  },
+  {
+   "group": "mid",
+   "role": "held-out",
+   "n": 30,
+   "n_reference": 120,
+   "frechet": 0.058038901830548384
+  }
+ ],
+ "seconds": 157.8
+}

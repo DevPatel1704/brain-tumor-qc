@@ -1,0 +1,46 @@
+# Data, checkpoints and runs are never committed (see README "Where things live").
+data/*
+!data/README.md
+!data/splits/
+results/predictions/
+results/cache/
+mlruns/
+mlflow.db
+mlartifacts/
+*.nii
+*.nii.gz
+*.npz
+*.u8.gz
+*.pth
+*.ckpt
+*.sqlite
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Node / browser tests
+node_modules/
+test-results/
+playwright-report/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local job logs (keep only the training log as evidence)
+results/train_logs/*
+!results/train_logs/baseline_mid_m0.log
