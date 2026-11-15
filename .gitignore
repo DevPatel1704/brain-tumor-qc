@@ -1,6 +1,5 @@
 # Data, checkpoints and runs are never committed (see README "Where things live").
 data/*
-!data/README.md
 !data/splits/
 results/predictions/
 results/cache/
@@ -44,3 +43,19 @@ Thumbs.db
 # Local job logs (keep only the training log as evidence)
 results/train_logs/*
 !results/train_logs/baseline_mid_m0.log
+
+# Kept locally, not published: report, slides, generated figures/screenshots, test outputs
+docs/report/
+docs/slides/
+results/figures*/
+results/screenshots/
+results/predictions_notta/
+results/slide_data.json
+results/coverage.json
+results/perf.json
+results/ui_junit.xml
+results/ece*.csv
+results/failure*.csv
+results/gaps_synthetic.csv
+results/cases_synthetic.csv
+results/tables_synthetic/

@@ -11,7 +11,7 @@
 ## Files created
 - `src/btqc/data/discover.py`, `nifti_io.py`, `manifest.py`, `labels.py`, `src/btqc/sysinfo.py`, `src/btqc/config.py`
 - `scripts/data_report.py`, `configs/data.yaml`
-- `docs/data_report.md` (generated, plus `docs/data_report_notes.md` with hand-checked notes)
+- `docs/data_report.md` (generated)
 - `data/manifest.csv` (219 rows), `data/file_inventory.csv` (876 rows), `data/phase0_summary.json`
 - Tests: `tests/unit/test_discover.py`, `tests/unit/test_labels.py`
 

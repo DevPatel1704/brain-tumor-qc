@@ -7,7 +7,7 @@
   - Built by `scripts/build_report.py`, which reads every number at build time from `data/phase0_summary.json`, `data/processed/convert_log.json`, `results/*.json` and `results/ui_junit.xml`.
   - Sections: introduction and gaps, related work, system and architecture, requirements and traceability, methodology, implementation (with code snippets), evaluation and testing, software process and reproducibility, lessons learned, discussion (including threats to validity and the negative outcome), limitations, ethics, conclusion, references, appendix (deviations, reproduction, definition-of-done).
 - References verified (DOIs resolve, arXiv titles match): `docs/report/reference_check.md`.
-- `docs/demo.md`: a five-minute demonstration script and an 8-slide outline.
+- A five-minute demonstration script and slide outline (kept with the course submission, not in the repository).
 - Model card (`docs/model_card.md`, `results/model_card.json`) and README updated with the real status.
 
 ## Honesty checks

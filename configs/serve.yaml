@@ -11,8 +11,8 @@ web_dir: web
 methods: [baseline, example_rule_based]
 
 # Review limit shown by default: the limit chosen on in-site validation of fold "mid"
-# by the configs/uncertainty.yaml rule (results/e5_failure.json, 2026-11-13 run).
-default_review_limit: 0.173
+# by the configs/uncertainty.yaml rule (results/e5_failure.json; 33 sampled validation cases, 2026-11-15).
+default_review_limit: 0.172
 
 # Upload limits for POST /api/predict (only enabled when a CUDA GPU and a
 # trained model are available).

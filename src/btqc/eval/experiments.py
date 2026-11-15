@@ -53,5 +53,5 @@ def write_outputs(summary: dict[str, Any], cases: pd.DataFrame, out_dir: Path, t
     q.write_text(json.dumps(summary, indent=1), encoding="utf-8")
     written.append(q)
     written += all_figures(summary, out_dir / f"figures{sfx}")
-    written += write_tables(summary, out_dir / f"tables{sfx}")
+    written += write_tables(summary, out_dir / (f"tables{sfx}_test_data" if tag == "synthetic" else f"tables{sfx}"))
     return written
