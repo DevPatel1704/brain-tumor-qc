@@ -1,0 +1,253 @@
+{
+ "status": "ok",
+ "fold": "mid",
+ "n_cases": 45,
+ "flips_8": {
+  "n_cases": 45,
+  "mean_dice": {
+   "WT": 0.851320424989802,
+   "TC": 0.8382173980431011,
+   "ET": 0.8042058308828415
+  },
+  "ece": [
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "heldout",
+    "region": "ET",
+    "mode": "band",
+    "ece": 0.01519842629722549,
+    "n_voxels": 2882332
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "heldout",
+    "region": "TC",
+    "mode": "band",
+    "ece": 0.023803285843766522,
+    "n_voxels": 2882332
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "heldout",
+    "region": "WT",
+    "mode": "band",
+    "ece": 0.061184653049734,
+    "n_voxels": 2882332
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "insite_test",
+    "region": "ET",
+    "mode": "band",
+    "ece": 0.03132413710797092,
+    "n_voxels": 2853263
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "insite_test",
+    "region": "TC",
+    "mode": "band",
+    "ece": 0.07881788702644707,
+    "n_voxels": 2853263
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "insite_test",
+    "region": "WT",
+    "mode": "band",
+    "ece": 0.09477171012060973,
+    "n_voxels": 2853263
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "val",
+    "region": "ET",
+    "mode": "band",
+    "ece": 0.030598139725891507,
+    "n_voxels": 2256754
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "val",
+    "region": "TC",
+    "mode": "band",
+    "ece": 0.023368806677453367,
+    "n_voxels": 2256754
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "val",
+    "region": "WT",
+    "mode": "band",
+    "ece": 0.06294549680520037,
+    "n_voxels": 2256754
+   }
+  ],
+  "failure": [
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "score": "boundary_band",
+    "n": 15,
+    "n_failed": 3,
+    "auroc": 0.8888888888888888,
+    "lo": 0.6923076923076923,
+    "hi": 1.0,
+    "n_boot_valid": 1931,
+    "review_limit": 0.17280293405056,
+    "limit_source": "val",
+    "flagged_frac": 0.26666666666666666,
+    "fail_rate_flagged": 0.5,
+    "fail_rate_unflagged": 0.09090909090909091,
+    "dice_mean_unflagged": 0.8879734029539265,
+    "dice_mean_all": 0.7996000898204643
+   }
+  ],
+  "risk_coverage": [
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "score": "score_boundary_band",
+    "aurc": 0.1099983670430649,
+    "auc_dice": 0.890001632956935,
+    "dice_full": 0.7996000898204642,
+    "dice_at_80": 0.8848209977524281,
+    "gain_at_80": 0.08522090793196391,
+    "oracle_aurc": 0.08964753912635366
+   }
+  ]
+ },
+ "flips_1": {
+  "n_cases": 45,
+  "mean_dice": {
+   "WT": 0.8461600843990722,
+   "TC": 0.8361487442561661,
+   "ET": 0.800983385912462
+  },
+  "ece": [
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "heldout",
+    "region": "ET",
+    "mode": "band",
+    "ece": 0.01698301433278235,
+    "n_voxels": 2913655
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "heldout",
+    "region": "TC",
+    "mode": "band",
+    "ece": 0.02676891520093673,
+    "n_voxels": 2913655
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "heldout",
+    "region": "WT",
+    "mode": "band",
+    "ece": 0.06617594129833242,
+    "n_voxels": 2913655
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "insite_test",
+    "region": "ET",
+    "mode": "band",
+    "ece": 0.03165374433301075,
+    "n_voxels": 2888133
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "insite_test",
+    "region": "TC",
+    "mode": "band",
+    "ece": 0.0785555260600431,
+    "n_voxels": 2888133
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "insite_test",
+    "region": "WT",
+    "mode": "band",
+    "ece": 0.09814746004664524,
+    "n_voxels": 2888133
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "val",
+    "region": "ET",
+    "mode": "band",
+    "ece": 0.030575906039517917,
+    "n_voxels": 2299880
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "val",
+    "region": "TC",
+    "mode": "band",
+    "ece": 0.024787361206556505,
+    "n_voxels": 2299880
+   },
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "split": "val",
+    "region": "WT",
+    "mode": "band",
+    "ece": 0.06972506902288439,
+    "n_voxels": 2299880
+   }
+  ],
+  "failure": [
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "score": "boundary_band",
+    "n": 15,
+    "n_failed": 3,
+    "auroc": 0.8333333333333334,
+    "lo": 0.5833333333333334,
+    "hi": 1.0,
+    "n_boot_valid": 1931,
+    "review_limit": 0.16566996276378632,
+    "limit_source": "val",
+    "flagged_frac": 0.2,
+    "fail_rate_flagged": 0.3333333333333333,
+    "fail_rate_unflagged": 0.16666666666666666,
+    "dice_mean_unflagged": 0.8408131227486618,
+    "dice_mean_all": 0.7970452768176344
+   }
+  ],
+  "risk_coverage": [
+   {
+    "method": "baseline",
+    "fold": "mid",
+    "score": "score_boundary_band",
+    "aurc": 0.12057063557219498,
+    "auc_dice": 0.8794293644278048,
+    "dice_full": 0.7970452768176344,
+    "dice_at_80": 0.8408131227486618,
+    "gain_at_80": 0.04376784593102745,
+    "oracle_aurc": 0.09137743424664155
+   }
+  ]
+ }
+}

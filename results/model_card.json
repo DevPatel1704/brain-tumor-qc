@@ -34,11 +34,15 @@
   {
    "title": "Per-group results",
    "body": [
-    "baseline / mid / WT: in-site Dice 0.853 (n = 15), held-out Dice 0.849 (n = 15), gap 0.004 [95% CI -0.111, 0.111]",
-    "baseline / mid / TC: in-site Dice 0.823 (n = 15), held-out Dice 0.787 (n = 15), gap 0.035 [95% CI -0.135, 0.195]",
-    "baseline / mid / ET: in-site Dice 0.800 (n = 15), held-out Dice 0.763 (n = 15), gap 0.037 [95% CI -0.108, 0.202]",
-    "baseline / mid: failure detection (held-out) AUROC 0.89 [0.69, 1.00], 3 of 15 cases failed; review limit 0.173 flags 27%; failure rate flagged 50% vs unflagged 9%",
-    "Pilot result: 15 cases per split (docs/deviations.md D15-D17); confidence intervals are wide."
+    "baseline / mid / WT: in-site Dice 0.880 (n = 33), held-out Dice 0.856 (n = 32), gap 0.024 [95% CI -0.044, 0.090]",
+    "baseline / mid / TC: in-site Dice 0.866 (n = 33), held-out Dice 0.792 (n = 32), gap 0.074 [95% CI -0.034, 0.177]",
+    "baseline / mid / ET: in-site Dice 0.833 (n = 33), held-out Dice 0.760 (n = 32), gap 0.073 [95% CI -0.024, 0.175]",
+    "tta_entropy / mid / WT: in-site Dice 0.848 (n = 15), held-out Dice 0.864 (n = 15), gap -0.015 [95% CI -0.124, 0.082]",
+    "tta_entropy / mid / TC: in-site Dice 0.822 (n = 15), held-out Dice 0.794 (n = 15), gap 0.028 [95% CI -0.140, 0.183]",
+    "tta_entropy / mid / ET: in-site Dice 0.798 (n = 15), held-out Dice 0.761 (n = 15), gap 0.036 [95% CI -0.108, 0.198]",
+    "baseline / mid: failure detection (held-out) AUROC 0.84 [0.65, 0.97], 5 of 32 cases failed; review limit 0.172 flags 47%; failure rate flagged 33% vs unflagged 0%",
+    "tta_entropy / mid: failure detection (held-out) AUROC 0.83 [0.57, 1.00], 3 of 15 cases failed; review limit 0.139 flags 73%; failure rate flagged 27% vs unflagged 0%",
+    "Pilot result: seeded random test samples (docs/deviations.md D15-D17); confidence intervals are wide."
    ]
   },
   {
@@ -52,7 +56,7 @@
   {
    "title": "Limitations",
    "body": [
-    "Laptop pilot: 10 epochs, one held-out site group, 15 test cases per split; other methods and folds not run.",
+    "Laptop pilot: 10 epochs, one held-out site group, seeded random test samples; other methods and folds not run.",
     "Site is only a proxy for scanner and protocol; grade and site are confounded for the LGG-only group.",
     "Five site groups give very low power for shift-versus-gap correlations.",
     "Entropy-based uncertainty can be confidently wrong under strong shift; AUROC must be checked per site.",

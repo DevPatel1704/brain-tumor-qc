@@ -151,6 +151,7 @@ class Report:
         self.sub_n = 0
         roman = ROMAN[self.sec_n - 1]
         p = self.doc.add_paragraph()
+        p.paragraph_format.keep_with_next = True
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p.paragraph_format.space_before = Pt(8)
         r = p.add_run(f"{roman}. {text.upper()}")
@@ -159,6 +160,7 @@ class Report:
     def h2(self, text: str) -> None:
         self.sub_n += 1
         p = self.doc.add_paragraph()
+        p.paragraph_format.keep_with_next = True
         p.paragraph_format.space_before = Pt(4)
         r = p.add_run(f"{chr(64 + self.sub_n)}. {text}")
         r.italic = True
@@ -201,7 +203,8 @@ class Report:
         sec = self.doc.add_section(WD_SECTION.CONTINUOUS)
         self._columns(sec, 2)
 
-    def table(self, caption: str, header: list[str], rows: list[list[Any]], widths: list[float] | None = None) -> None:
+    def table(self, caption: str, header: list[str], rows: list[list[Any]], widths: list[float] | None = None,
+              keep: bool | None = None) -> None:
         self.tab_n += 1
         roman = ROMAN[self.tab_n - 1]
         p = self.doc.add_paragraph()
@@ -227,6 +230,19 @@ class Report:
             for row in t.rows:
                 for i, w in enumerate(widths):
                     row.cells[i].width = Inches(w)
+        if keep is None:
+            keep = len(t.rows) <= 14  # short tables stay together with their caption
+        p.paragraph_format.keep_with_next = True
+        p.paragraph_format.keep_together = True
+        for k, row in enumerate(t.rows):
+            tr_pr = row._tr.get_or_add_trPr()
+            tr_pr.append(OxmlElement("w:cantSplit"))
+            if k == 0:
+                tr_pr.append(OxmlElement("w:tblHeader"))
+            if k == 0 or (keep and k < len(t.rows) - 1):
+                for c in row.cells:
+                    for para in c.paragraphs:
+                        para.paragraph_format.keep_with_next = True
         self.doc.add_paragraph().paragraph_format.space_after = Pt(2)
 
 
@@ -277,6 +293,27 @@ def test_inventory() -> dict[str, int]:
                            capture_output=True, text=True)
         out[d] = sum("::" in line for line in r.stdout.splitlines())
     return out
+
+
+REGION_LONG = {"WT": "whole tumor", "TC": "tumor core", "ET": "enhancing tumor"}
+
+
+def largest_gap(gd: dict[str, Any], long: bool = True) -> str:
+    """Region(s) with the largest in-site minus held-out gap; near-ties (within 0.005) are named together."""
+    gd = {r: g for r, g in gd.items() if g}
+    if not gd:
+        return "?"
+    top = max(g["gap"] for g in gd.values())
+    names = [REGION_LONG[r] if long else r for r in gd if gd[r]["gap"] >= top - 0.005]
+    return " and ".join(names)
+
+
+def h2_tta(e3: dict[str, Any]) -> str:
+    """Honest H2 status for test-time adaptation: CI of the paired difference plus the Holm-adjusted p."""
+    c = {x["region"]: x for x in e3.get("comparisons", [])}
+    parts = [f"{r} {c[r]['diff_mean']:+.3f} [{c[r]['diff_lo']:+.3f}, {c[r]['diff_hi']:+.3f}], Holm p = {c[r]['wilcoxon']['p_holm']:.2f}" for r in ("WT", "TC", "ET") if r in c]
+    sig = any(x["wilcoxon"]["p_holm"] < 0.05 for x in c.values())
+    return ("test-time adaptation: " + "; ".join(parts) + ("" if sig else " (no region significant)"))
 
 
 def real_results() -> dict[str, Any] | None:
@@ -374,6 +411,7 @@ def main() -> int:
     tests_line = re.sub(r" in [0-9.]+s.*$", "", e6["pytest_summary"]) if e6 else "not run"
     if rr:
         gd = {r: rr["gaps"].get((r, "dice")) for r in ("WT", "TC", "ET")}
+        e3wt = next((c for c in (rr.get("e3") or {}).get("comparisons", []) if c["region"] == "WT"), None)
         fb = rr["fail"].get("boundary_band")
         ns = rr["n_split"]
         rp.abstract(
@@ -388,8 +426,7 @@ def main() -> int:
             f"({ns.get('heldout', 0)}) test cases. In-site and held-out Dice were "
             + ", ".join(f"{gd[r]['insite_mean']:.2f}/{gd[r]['heldout_mean']:.2f} ({r})" for r in gd if gd[r])
             + "; the drop is largest for "
-            + {"WT": "whole tumor", "TC": "tumor core", "ET": "enhancing tumor"}[
-                max((r for r in gd if gd[r]), key=lambda r: gd[r]["gap"])]
+            + largest_gap(gd)
             + (", and its bootstrap interval excludes zero for "
                + ", ".join(r for r in gd if gd[r] and gd[r]["gap_lo"] > 0) + ". "
                if any(gd[r] and gd[r]["gap_lo"] > 0 for r in gd) else
@@ -397,7 +434,9 @@ def main() -> int:
             + (f"The boundary-band uncertainty score detected held-out failures with AUROC {fb['auroc']:.2f} "
                f"(95% CI {fb['lo']:.2f}–{fb['hi']:.2f}); flagged cases failed {fb['fail_rate_flagged']:.0%} of the "
                f"time versus {fb['fail_rate_unflagged']:.0%} for unflagged cases. " if fb else "")
-            + "The mitigation comparison and the other four folds were not run within the compute budget; the "
+            + (f"Test-time adaptation changed held-out Dice by {e3wt['diff_mean']:+.3f} (WT, n = {e3wt['n']}), "
+               f"not significant after Holm correction (p = {e3wt['wilcoxon']['p_holm']:.2f}). " if e3wt else "")
+            + "Training-time mitigations and the other four folds were not run within the compute budget; the "
             f"result is a pilot. The software is verified by a test suite ({tests_line}).",
             "ML-enabled systems, safety-critical software, domain shift, uncertainty estimation, medical image "
             "segmentation, software testing, human-in-the-loop")
@@ -469,7 +508,7 @@ def main() -> int:
          "no view of mask, uncertainty and flag together", "browser QC dashboard, review queue, explorer (C4)"],
         ["Verification", "framework unit tests", "no requirement-linked tests around the model",
          "R1–R8 traced to unit, integration, metamorphic, UI tests; CI; Docker (C4)"],
-    ], [0.62, 0.95, 0.85, 0.98])
+    ], [0.62, 0.95, 0.85, 0.98], keep=False)
 
     # II. Related work and gaps
     rp.h1("Background, Related Work and Gaps")
@@ -808,7 +847,7 @@ def flag(score, review_limit) -> bool:
                      f"{sum(ns.values())} cases: val {ns.get('val', 0)}, in-site {ns.get('insite_test', 0)}, "
                      f"held-out {ns.get('heldout', 0)} (seeded samples)",
                      f"{rr['infer_s']:.0f} s/case, 8 flips" if rr.get("infer_s") else ""])
-        rows.append(["Mitigations (E3), other folds and seeds", "not run (compute budget)", "docs/deviations.md"])
+        rows.append(["Training-time mitigations, other folds and seeds", "not run (compute budget)", "docs/deviations.md"])
     else:
         rows.append(["Site-held-out training and evaluation (E1–E5)", "not run (no labeled data, no GPU)", ""])
     rp.table("Runs executed for this report", ["Run", "Outcome", "Notes"], rows, [1.2, 1.5, 0.6])
@@ -870,7 +909,7 @@ def flag(score, review_limit) -> bool:
         gd = {r: rr["gaps"][(r, "dice")] for r in ("WT", "TC", "ET") if (r, "dice") in rr["gaps"]}
         pos = [r for r in gd if gd[r]["gap"] > 0]
         sig = [r for r in gd if gd[r]["gap_lo"] > 0]
-        big = max(gd, key=lambda r: gd[r]["gap"]) if gd else "?"
+        big = largest_gap(gd, long=False)
         rp.para(("Held-out Dice is below in-site Dice for every region" if len(pos) == len(gd) else
                  f"Held-out Dice is below in-site Dice for {', '.join(pos) or 'no region'}")
                 + f", and the drop is largest for {big}"
@@ -934,8 +973,9 @@ def flag(score, review_limit) -> bool:
             rp.table("Expected calibration error (15 bins) near the tumor boundary and over the brain",
                      ["Split", "Region", "ECE band", "ECE brain"], rows, [0.7, 0.5, 0.7, 0.7])
             rp.para("Calibration over the whole brain is dominated by easy background voxels and is therefore small; "
-                    "the boundary band is the informative number. Comparing estimators (E4) needs the seed "
-                    "ensemble and the TTA variants, which were not trained.")
+                    "the boundary band is the informative number. Deep ensembles and Monte Carlo dropout need extra "
+                    "trained models and were not compared; Section VII-I compares eight flip members with a single "
+                    "prediction.")
             rp.figure(R / "figures" / "reliability_baseline.png",
                       "Reliability diagram near the tumor boundary (baseline, real data).", 2.6)
         rp.para("E2 relates intensity shift to the gap across folds. With one trained fold there is a single "
@@ -981,10 +1021,14 @@ def flag(score, review_limit) -> bool:
                      [0.5, 0.35, 1.3, 0.7])
             better = [c["region"] for c in e3["comparisons"] if c["diff_lo"] > 0]
             worse = [c["region"] for c in e3["comparisons"] if c["diff_hi"] < 0]
-            rp.para(("Test-time adaptation improves held-out Dice significantly for " + ", ".join(better) + ". "
-                     if better else "No region improves significantly. ")
-                    + ("It is significantly worse for " + ", ".join(worse) + ". " if worse else "")
-                    + "H2 is therefore " + ("supported for this mitigation" if e3.get("H2") else "not supported")
+            holm_sig = [c["region"] for c in e3["comparisons"] if c["wilcoxon"].get("p_holm", 1.0) < 0.05]
+            rp.para(("Test-time adaptation improves held-out Dice significantly after Holm adjustment for "
+                     + ", ".join(holm_sig) + ". H2 is therefore supported for this mitigation" if holm_sig else
+                     ("The bootstrap interval of the paired difference excludes zero for " + ", ".join(better)
+                      + ", but " if better else "")
+                     + "no region improves significantly after Holm adjustment"
+                     + (", and the interval lies below zero for " + ", ".join(worse) if worse else "")
+                     + ". The gain is small and H2 is not shown for this mitigation")
                     + " on this fold; the three training-time mitigations were not trained.")
             tg = [g for g in rr["all_gaps"] if g["method"] == "tta_entropy" and g["metric"] == "dice"]
             if tg:
@@ -1111,7 +1155,7 @@ def flag(score, review_limit) -> bool:
             ["Members + uncertainty + scores (stub, 3 members)", f"{perf['stub_members_uncertainty_scores_s']} s"],
             ["Trust-gate decisions", f"{perf['gate_decisions_per_s']:,} per s"],
             ["Viewer bundles (4 sequences + mask)", f"{perf['viewer_bundle_mb_all_sequences_plus_seg']} MB"],
-            ["GPU model latency (R8)", "not run"],
+            ["GPU model latency (R8)", "measured on real cases: see the R7/R8 table" if rr and rr.get("r7r8") else "not run"],
         ], [2.2, 1.1])
         rp.para("These timings were taken while another conversion job ran on the same CPU and are upper bounds.")
     wl = workload_figure(R / "figures_example" / "review_workload.png")
@@ -1140,7 +1184,7 @@ def flag(score, review_limit) -> bool:
     rp.h2("Hypotheses")
     if rr:
         gd = {r: rr["gaps"][(r, "dice")] for r in ("WT", "TC", "ET") if (r, "dice") in rr["gaps"]}
-        big = max(gd, key=lambda r: gd[r]["gap"]) if gd else "?"
+        big = largest_gap(gd, long=False)
         allpos = all(g["gap"] > 0 for g in gd.values())
         anysig = any(g["gap_lo"] > 0 for g in gd.values())
         h1 = ("direction supported (" + ("all regions lower" if allpos else "not all regions lower")
@@ -1156,8 +1200,7 @@ def flag(score, review_limit) -> bool:
         rp.table("Hypotheses H1–H3 (pilot: one fold, sampled test cases)", ["Hypothesis", "Status"], [
             ["H1: held-out Dice < in-site, largest for ET and LGG-only", h1],
             ["H2: a mitigation reduces the mean gap",
-             ("test-time adaptation only: " + ("supported" if rr["e3"].get("H2") else "not supported")
-              + "; training-time mitigations not run")
+             (h2_tta(rr["e3"]) + "; training-time mitigations not run")
              if rr.get("e3") and rr["e3"].get("status") == "ok" else "not run (mitigations not trained)"],
             ["H3: AUROC CI above 0.5 and deferral raises retained Dice", h3],
         ], [1.6, 1.7])
@@ -1258,7 +1301,7 @@ def flag(score, review_limit) -> bool:
     ] + ([
         "Measure memory, not plans. The 4 GB nnU-Net plan ran out of GPU memory at the first iteration under Windows, where only about 3 GB is usable; a standalone forward/backward probe of the planned network at several patch sizes found a configuration that fits, and disabling cuDNN's algorithm search removed the remaining memory spikes.",
         "The operating system is part of the pipeline. Preprocessing and the first training attempt died because a nearly full system drive could not grow the paging file; moving the paging file to the data drive fixed both.",
-        "Sample for the deadline, but sample honestly. Inference with eight flip members took about two minutes per case, so the test sets were sampled at random with a fixed seed, in an order that keeps every split a random sample wherever the run stops.",
+        "Sample for the deadline, but sample honestly. Inference with eight flip members took more than two minutes per case, so the test sets were sampled at random with a fixed seed, in an order that keeps every split a random sample wherever the run stops.",
     ] if rr else []))
 
     # VIII. Discussion
@@ -1270,7 +1313,8 @@ def flag(score, review_limit) -> bool:
                 "trust gate whose limit was fixed on in-site data before the held-out cases were scored. A baseline "
                 f"trained for only {rr['tcfg']['epochs']} epochs already reaches in-site Dice close to published "
                 "nnU-Net results on BraTS-style data, and its accuracy at seven unseen institutions is lower, most "
-                "for enhancing tumor, though not by a margin this sample can confirm. "
+                "for " + largest_gap({r: rr["gaps"].get((r, "dice")) for r in ("WT", "TC", "ET")})
+                + ", though not by a margin this sample can confirm. "
                 + (f"The most useful finding for a deployed system is that the uncertainty score separated failed "
                    f"from successful held-out segmentations (AUROC {fb['auroc']:.2f}), so a reviewer who checks the "
                    "flagged cases would see most of the failures. " if fb else "")
@@ -1306,7 +1350,7 @@ def flag(score, review_limit) -> bool:
     rp.h1("Limitations")
     rp.bullets([
         (f"Pilot scale: one method, one held-out group, one seed, {load_config('train')['epochs']} epochs, and "
-         "sampled test sets; confidence intervals are wide and the mitigation comparison was not run."
+         "sampled test sets; confidence intervals are wide, and test-time adaptation is the only mitigation compared."
          if rr else "No model was trained or evaluated on real data; all model-dependent numbers are not run."),
         "Site is a proxy: scanner and protocol metadata are absent, and grade is confounded with site for the LGG-only group.",
         "Five site groups give very low power for shift-versus-gap correlation; the site risk estimate is an extrapolation from a handful of points.",
@@ -1337,11 +1381,12 @@ def flag(score, review_limit) -> bool:
         rp.para("We engineered a site-held-out evaluation harness, mitigation trainers, an uncertainty monitor with "
                 "a fail-safe trust gate, and a quality-control dashboard around nnU-Net and FeTS 2022, specified by "
                 "eight requirements and verified by automated tests. A laptop-scale pilot on real labels showed a "
-                "small, not yet significant accuracy drop at seven unseen institutions, largest for enhancing tumor"
+                "small, not yet significant accuracy drop at seven unseen institutions, largest for "
+                + largest_gap({r: rr["gaps"].get((r, "dice")) for r in ("WT", "TC", "ET")})
                 + (f", and an uncertainty score that detects failed segmentations with AUROC {fb['auroc']:.2f}" if fb
                    else "")
                 + ". The same scripts, run on a larger GPU with the full protocol of four methods, five folds and "
-                  "three seeds, produce the mitigation comparison and the per-site evidence this design was built "
+                  "three seeds, produce the full mitigation comparison and the per-site evidence this design was built "
                   "to measure.")
     else:
         rp.para("We engineered a site-held-out evaluation harness, mitigation trainers, an uncertainty monitor with "

@@ -42,8 +42,8 @@ def main() -> int:
                     f"[{f['lo']:.2f}, {f['hi']:.2f}], {f['n_failed']} of {f['n']} cases failed; review limit "
                     f"{f['review_limit']:.3f} flags {f['flagged_frac']:.0%}; failure rate flagged "
                     f"{f['fail_rate_flagged']:.0%} vs unflagged {f['fail_rate_unflagged']:.0%}")
-        results_body.append("Pilot result: 15 cases per split (docs/deviations.md D15-D17); confidence intervals "
-                            "are wide.")
+        results_body.append("Pilot result: seeded random test samples (docs/deviations.md D15-D17); "
+                            "confidence intervals are wide.")
     else:
         results_body = ("Not run. No model has been trained on real data: the labeled FeTS 2022 training data and "
                         "the institution partitioning were not available (data situation C), and the machine has no "
@@ -83,7 +83,7 @@ def main() -> int:
             "CPU performance (synthetic 240x240x155)": json.dumps(perf) if perf else "not run",
             "GPU latency (R8)": "not run"}},
         {"title": "Limitations", "body": [
-            ("Laptop pilot: 10 epochs, one held-out site group, 15 test cases per split; other methods and folds "
+            ("Laptop pilot: 10 epochs, one held-out site group, seeded random test samples; other methods and folds "
              "not run." if trained else
              "No real accuracy has been measured; every outline shown on real scans is a rule-based EXAMPLE."),
             "Site is only a proxy for scanner and protocol; grade and site are confounded for the LGG-only group.",

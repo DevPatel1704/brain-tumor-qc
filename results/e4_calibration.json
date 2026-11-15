@@ -7,8 +7,8 @@
    "split": "heldout",
    "region": "ET",
    "mode": "band",
-   "ece": 0.01519842629722549,
-   "n_voxels": 2882332
+   "ece": 0.03076953100307983,
+   "n_voxels": 6967497
   },
   {
    "method": "baseline",
@@ -16,152 +16,314 @@
    "split": "heldout",
    "region": "ET",
    "mode": "volume",
-   "ece": 0.0020415510163547222,
+   "ece": 0.004776722506110965,
+   "n_voxels": 44823624
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "heldout",
+   "region": "TC",
+   "mode": "band",
+   "ece": 0.0407773951921961,
+   "n_voxels": 6967497
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "heldout",
+   "region": "TC",
+   "mode": "volume",
+   "ece": 0.006320611838716826,
+   "n_voxels": 44823624
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "heldout",
+   "region": "WT",
+   "mode": "band",
+   "ece": 0.08386007169690499,
+   "n_voxels": 6967497
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "heldout",
+   "region": "WT",
+   "mode": "volume",
+   "ece": 0.012460380807710569,
+   "n_voxels": 44823624
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "insite_test",
+   "region": "ET",
+   "mode": "band",
+   "ece": 0.021230316355186362,
+   "n_voxels": 6377562
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "insite_test",
+   "region": "ET",
+   "mode": "volume",
+   "ece": 0.0027650057280036986,
+   "n_voxels": 48882298
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "insite_test",
+   "region": "TC",
+   "mode": "band",
+   "ece": 0.037434445541092126,
+   "n_voxels": 6377562
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "insite_test",
+   "region": "TC",
+   "mode": "volume",
+   "ece": 0.004874196978381858,
+   "n_voxels": 48882298
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "insite_test",
+   "region": "WT",
+   "mode": "band",
+   "ece": 0.06443011391500116,
+   "n_voxels": 6377562
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "insite_test",
+   "region": "WT",
+   "mode": "volume",
+   "ece": 0.00792261065013515,
+   "n_voxels": 48882298
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "val",
+   "region": "ET",
+   "mode": "band",
+   "ece": 0.02551824045554118,
+   "n_voxels": 5617020
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "val",
+   "region": "ET",
+   "mode": "volume",
+   "ece": 0.002977306905345226,
+   "n_voxels": 48043570
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "val",
+   "region": "TC",
+   "mode": "band",
+   "ece": 0.04212110550755784,
+   "n_voxels": 5617020
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "val",
+   "region": "TC",
+   "mode": "volume",
+   "ece": 0.004911079599295363,
+   "n_voxels": 48043570
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "val",
+   "region": "WT",
+   "mode": "band",
+   "ece": 0.0598465469701669,
+   "n_voxels": 5617020
+  },
+  {
+   "method": "baseline",
+   "fold": "mid",
+   "split": "val",
+   "region": "WT",
+   "mode": "volume",
+   "ece": 0.0064497090286190295,
+   "n_voxels": 48043570
+  },
+  {
+   "method": "tta_entropy",
+   "fold": "mid",
+   "split": "heldout",
+   "region": "ET",
+   "mode": "band",
+   "ece": 0.01721689006473334,
+   "n_voxels": 2738920
+  },
+  {
+   "method": "tta_entropy",
+   "fold": "mid",
+   "split": "heldout",
+   "region": "ET",
+   "mode": "volume",
+   "ece": 0.002199264562019051,
    "n_voxels": 21399681
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "heldout",
    "region": "TC",
    "mode": "band",
-   "ece": 0.023803285843766522,
-   "n_voxels": 2882332
+   "ece": 0.02447147999589002,
+   "n_voxels": 2738920
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "heldout",
    "region": "TC",
    "mode": "volume",
-   "ece": 0.0031924551438102552,
+   "ece": 0.003121793556011532,
    "n_voxels": 21399681
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "heldout",
    "region": "WT",
    "mode": "band",
-   "ece": 0.061184653049734,
-   "n_voxels": 2882332
+   "ece": 0.05022935239755959,
+   "n_voxels": 2738920
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "heldout",
    "region": "WT",
    "mode": "volume",
-   "ece": 0.00771601551742648,
+   "ece": 0.005921705607184644,
    "n_voxels": 21399681
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "insite_test",
    "region": "ET",
    "mode": "band",
-   "ece": 0.03132413710797092,
-   "n_voxels": 2853263
+   "ece": 0.03340752158386051,
+   "n_voxels": 2793640
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "insite_test",
    "region": "ET",
    "mode": "volume",
-   "ece": 0.004009787363805674,
+   "ece": 0.004187899200781662,
    "n_voxels": 22274096
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "insite_test",
    "region": "TC",
    "mode": "band",
-   "ece": 0.07881788702644707,
-   "n_voxels": 2853263
+   "ece": 0.08569879665678715,
+   "n_voxels": 2793640
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "insite_test",
    "region": "TC",
    "mode": "volume",
-   "ece": 0.010086822410314016,
+   "ece": 0.010741454442596353,
    "n_voxels": 22274096
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "insite_test",
    "region": "WT",
    "mode": "band",
-   "ece": 0.09477171012060973,
-   "n_voxels": 2853263
+   "ece": 0.11020347791754591,
+   "n_voxels": 2793640
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "insite_test",
    "region": "WT",
    "mode": "volume",
-   "ece": 0.011639165315255199,
+   "ece": 0.013497667473926733,
    "n_voxels": 22274096
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "val",
    "region": "ET",
    "mode": "band",
-   "ece": 0.030598139725891507,
-   "n_voxels": 2256754
+   "ece": 0.010231027524797898,
+   "n_voxels": 194687
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "val",
    "region": "ET",
    "mode": "volume",
-   "ece": 0.0031830956414893256,
-   "n_voxels": 21644179
+   "ece": 0.0004354646063097114,
+   "n_voxels": 4482380
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "val",
    "region": "TC",
    "mode": "band",
-   "ece": 0.023368806677453367,
-   "n_voxels": 2256754
+   "ece": 0.0068072214102437335,
+   "n_voxels": 194687
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "val",
    "region": "TC",
    "mode": "volume",
-   "ece": 0.0024244461483204152,
-   "n_voxels": 21644179
+   "ece": 0.0002790991839771543,
+   "n_voxels": 4482380
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "val",
    "region": "WT",
    "mode": "band",
-   "ece": 0.06294549680520037,
-   "n_voxels": 2256754
+   "ece": 0.08809256604777999,
+   "n_voxels": 194687
   },
   {
-   "method": "baseline",
+   "method": "tta_entropy",
    "fold": "mid",
    "split": "val",
    "region": "WT",
    "mode": "volume",
-   "ece": 0.006090846677755387,
-   "n_voxels": 21644179
+   "ece": 0.0033358407166363116,
+   "n_voxels": 4482380
   }
  ],
  "note": "estimators compared = methods with records (ensemble, TTA variants)"

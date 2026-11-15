@@ -1,4 +1,54 @@
 {
- "status": "not run",
- "reason": "only the baseline has predictions"
+ "status": "ok",
+ "comparisons": [
+  {
+   "method": "tta_entropy",
+   "region": "WT",
+   "n": 15,
+   "diff_mean": 0.015394042159993689,
+   "diff_lo": 0.0030067806197045265,
+   "diff_hi": 0.030747533525212218,
+   "diff_n": 15,
+   "wilcoxon": {
+    "statistic": 33.0,
+    "p": 0.1353759765625,
+    "n": 15,
+    "median_diff": 0.0010271806155974783,
+    "p_holm": 0.270751953125
+   }
+  },
+  {
+   "method": "tta_entropy",
+   "region": "TC",
+   "n": 15,
+   "diff_mean": 0.006480988640337173,
+   "diff_lo": -0.004654621849493427,
+   "diff_hi": 0.019065353444569267,
+   "diff_n": 15,
+   "wilcoxon": {
+    "statistic": 60.0,
+    "p": 1.0,
+    "n": 15,
+    "median_diff": -0.0006557103853261914,
+    "p_holm": 1.0
+   }
+  },
+  {
+   "method": "tta_entropy",
+   "region": "ET",
+   "n": 15,
+   "diff_mean": -0.001485159045208114,
+   "diff_lo": -0.006568551472879417,
+   "diff_hi": 0.004633327166041191,
+   "diff_n": 15,
+   "wilcoxon": {
+    "statistic": 25.0,
+    "p": 0.08428387967828298,
+    "n": 15,
+    "median_diff": -0.0013731956232780895,
+    "p_holm": 0.2528516390348489
+   }
+  }
+ ],
+ "H2": true
 }

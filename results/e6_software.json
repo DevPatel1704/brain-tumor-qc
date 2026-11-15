@@ -1,9 +1,9 @@
 {
  "status": "ok",
- "pytest_summary": "179 passed, 27 deselected in 141.53s (0:02:21)",
+ "pytest_summary": "179 passed, 29 deselected in 231.49s (0:03:51)",
  "returncode": 0,
  "coverage_percent": 81.34482758620689,
- "elapsed_s": 182.5,
+ "elapsed_s": 294.9,
  "performance": {
   "shape": [
    240,

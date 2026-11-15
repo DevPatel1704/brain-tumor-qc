@@ -222,7 +222,8 @@ async function main() {
     showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0.00", valAxisMinVal: 0, valAxisMaxVal: 1,
     valAxisLabelFormatCode: "0.0", showLegend: true, legendPos: "b", showTitle: true, title: "Mean Dice (higher is better)",
     titleFontSize: 14, titleColor: HEX.dk1, ...chartText });
-  const big = regs.reduce((a, r) => (g[r + "_dice"].gap > g[a + "_dice"].gap ? r : a), regs[0]);
+  const topGap = Math.max(...regs.map((r) => g[r + "_dice"].gap));
+  const bigRegs = regs.filter((r) => g[r + "_dice"].gap >= topGap - 0.005);  // near-ties are named together
   card(s, 8.4, 1.45, 4.3, 5.1);
   text(s, "Gap (in-site − held-out)", { x: 8.7, y: 1.65, w: 3.8, h: 0.4, fontSize: 16, bold: true, color: HEX.dk2 });
   regs.forEach((r, i) => {
@@ -232,7 +233,8 @@ async function main() {
     { x: 8.7, y: 2.2 + i * 0.95, w: 3.8, h: 0.85, fontSize: 16, valign: "top" });
   });
   const anySig = regs.some((r) => g[r + "_dice"].gap_lo > 0);
-  text(s, `Largest drop: ${REG[big]}, as H1 predicted for ET. ` + (anySig ? "Some intervals exclude 0." :
+  text(s, `Largest drop: ${bigRegs.map((r) => REG[r].toLowerCase()).join(" and ")}` +
+    (bigRegs.includes("ET") ? ", as H1 predicted for ET. " : ". ") + (anySig ? "Some intervals exclude 0." :
     "Every interval includes 0: a trend, not yet a proven effect."), { x: 8.7, y: 5.1, w: 3.8, h: 1.3, fontSize: 14, color: MUTED, valign: "top" });
   s.addNotes("Read this as a pilot: the direction matches the hypothesis, but with this sample size the gap is not significant.");
 
@@ -290,7 +292,9 @@ async function main() {
   if (D.e3 && D.e3.status === "ok") {
     text(s, D.e3.comparisons.map((c, i) => ({ text: `${REG[c.region]}: ${c.diff_mean >= 0 ? "+" : ""}${f3(c.diff_mean)} [${f3(c.diff_lo)}, ${f3(c.diff_hi)}]`,
       options: { breakLine: i < D.e3.comparisons.length - 1 } })), { x: 7.15, y: 2.05, w: 5.3, h: 1.1, fontSize: 15, valign: "top" });
-    text(s, D.e3.H2 ? "H2 supported for this mitigation." : "No significant improvement: H2 not supported on this fold.",
+    const e3sig = D.e3.comparisons.some((c) => c.wilcoxon && c.wilcoxon.p_holm < 0.05);
+    text(s, e3sig ? "Significant after Holm correction: H2 supported for this mitigation."
+      : "Small gains, none significant after Holm correction: H2 not shown on this fold.",
       { x: 7.15, y: 3.2, w: 5.3, h: 0.45, fontSize: 14, color: MUTED });
   } else {
     text(s, "Pending: results are added when the run finishes.", { x: 7.15, y: 2.1, w: 5.3, h: 0.5, fontSize: 15, color: MUTED });

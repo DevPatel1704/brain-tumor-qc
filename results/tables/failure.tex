@@ -6,9 +6,12 @@
 \hline
 method & fold & score & n & n\_failed & auroc & lo & hi & review\_limit & flagged\_frac & dice\_mean\_all & dice\_mean\_unflagged \\
 \hline
-baseline & mid & boundary\_band & 15 & 3 & 0.889 & 0.692 & 1.000 & 0.173 & 0.267 & 0.800 & 0.888 \\
-baseline & mid & wt\_mean & 15 & 3 & 0.833 & 0.571 & 1.000 & – & – & – & – \\
-baseline & mid & band\_disagreement & 15 & 3 & 0.972 & 0.857 & 1.000 & – & – & – & – \\
+baseline & mid & boundary\_band & 32 & 5 & 0.837 & 0.650 & 0.968 & 0.172 & 0.469 & 0.803 & 0.919 \\
+baseline & mid & wt\_mean & 32 & 5 & 0.822 & 0.625 & 0.966 & – & – & – & – \\
+baseline & mid & band\_disagreement & 32 & 5 & 0.941 & 0.830 & 1.000 & – & – & – & – \\
+tta\_entropy & mid & boundary\_band & 15 & 3 & 0.833 & 0.571 & 1.000 & 0.139 & 0.733 & 0.806 & 0.912 \\
+tta\_entropy & mid & wt\_mean & 15 & 3 & 0.833 & 0.571 & 1.000 & – & – & – & – \\
+tta\_entropy & mid & band\_disagreement & 15 & 3 & 0.917 & 0.692 & 1.000 & – & – & – & – \\
 \hline
 \end{tabular}
 \end{table}
